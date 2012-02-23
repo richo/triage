@@ -32,7 +32,7 @@ def list(request):
 
     if users:
         errors.filter(claimedby__in=users)
- 
+
     if order_by != False and errors.count():
         if direction and direction == 'desc':
             order_by = '-' + order_by

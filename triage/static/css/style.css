@@ -28,9 +28,12 @@ body {
 /*	Top Bar
 	------------------------------------------------------------ */
 
-.topbar .container {
-	width: 100%;
+.navbar .navbar-inner {
 	padding: 0 20px 0 20px;
+}
+
+.navbar .container {
+	width: 100%;
 }
 
 /*	Container
@@ -209,7 +212,7 @@ body {
 }
 
 .content form .desc {
-	width: 350px;
+	margin-left: 20px;
 }
 
 .content form .errorLi {
@@ -253,7 +256,7 @@ body {
 
 .content form p.error {
 	color: #B94A48;
-	margin-left: 370px;
+	margin-left: 20px;
 }
 
 /*	Comments
