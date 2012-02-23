@@ -22,11 +22,16 @@
 	------------------------------------------------------------ */
 
 body {
-	padding-top: 60px;
+	background-color: #EEEEEE;
+	padding: 10px;
 }
 
-/*	Top Bar
+/*	Nav Bar
 	------------------------------------------------------------ */
+
+.navbar {
+	margin-bottom: 10px;
+}
 
 .navbar .navbar-inner {
 	padding: 0 20px 0 20px;
@@ -38,6 +43,10 @@ body {
 
 /*	Container
 	------------------------------------------------------------ */
+
+.container-fluid {
+	padding: 0;
+}
 
 .container-fluid > .content {
 	margin-left: 0;
