@@ -7,7 +7,6 @@ Triage.modules.errorTabs = (function($, app) {
 		start: function() {
 			this.$container = $("#error-tabs");
 			this.show = this.$container.data("show").toString();
-			this.updateActive();
 		},
 		updateActive: function() {
 			this.$container.find("li").removeClass("active");
