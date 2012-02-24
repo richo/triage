@@ -180,6 +180,10 @@ body {
 	border: none;
 }
 
+.error-list tr {
+	cursor: pointer;
+}
+
 .error-list tr:hover td {
 	background-color: #EEEEEE;
 }
