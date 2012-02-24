@@ -82,7 +82,8 @@ def error_page(request):
     }
 
 
-@view_config(route_name='error_view', permission='authenticated')
+
+@view_config(route_name='error_view', permission='authenticated', xhr=True)
 def view(request):
     available_projects = request.registry.settings['projects']
     selected_project = get_selected_project(request)
