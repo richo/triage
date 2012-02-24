@@ -8,8 +8,7 @@ Triage.modules.dropdown = (function($, app) {
 				selector: ".tooltip-toggle"
 			});
 		},
-		stop: function() {
-		}
+		stop: function() { }
 	};
 });
 

@@ -379,3 +379,41 @@ body {
 	text-transform: none;
 }
 
+/*	Pane
+	------------------------------------------------------------ */
+
+.pane {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+.pane .pane-handle {
+	height: 5px;
+	background: #CCCCCC;
+}
+
+.pane .pane-container {
+	background: #EEEEEE;
+}
+
+.pane .pane-container {
+	display: none;
+	height: 200px;
+}
+
+.pane.pane-open .pane-container {
+	display: block;
+}
+
+.pane .pane-actions {
+	padding: 5px;
+	margin: 0;
+	background: #CCCCCC;
+}
+
+.pane .pane-actions .pane-active a {
+	text-decoration: none;
+	background-color: #EEE;
+}
