@@ -84,10 +84,10 @@ def add_date(event):
         today = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
         tomorrow = today + timedelta(days=1)
         date = datetime.fromtimestamp(timestamp)
-        
+
         if date >= today and date < tomorrow:
             return date.strftime(format_today)
-        
+
         return date.strftime(format_other)
 
     event['date'] = test
