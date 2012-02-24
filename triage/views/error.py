@@ -22,6 +22,9 @@ def get_errors(request):
     start = request.GET.get('start', 0)
     end = start + 20
 
+    if show not in ['open', 'resolved', 'mine']:
+        show = 'open'
+
     if show == 'open':
         errors = Error.objects.active(selected_project)
     elif show == 'resolved':
@@ -48,7 +51,7 @@ def error_list(request):
     }
 
 
-@view_config(route_name='error_list', permission='authenticated', renderer='error-list.html')
+@view_config(route_name='error_list', permission='authenticated', xhr=False, renderer='error-list.html')
 def error_page(request):
     available_projects = request.registry.settings['projects']
     selected_project = get_selected_project(request)
@@ -58,6 +61,9 @@ def error_page(request):
     tags = request.GET.getall('tags')
     start = request.GET.get('start', 0)
     end = start + 20
+
+    if show not in ['open', 'resolved', 'mine']:
+        show = 'open'
 
     errors = get_errors(request)
 

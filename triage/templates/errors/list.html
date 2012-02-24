@@ -1,0 +1,3 @@
+{% for error in errors %}
+	{% include ['errors/'+error.language+'-row.html', 'errors/row.html'] %}
+{% endfor %}

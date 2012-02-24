@@ -31,39 +31,7 @@
 
 	<table class="error-list table">
 		<tbody>
-			{% for error in errors %}
-				<tr class="{{error.get_row_classes(user)}}" data-hash="{{ error.id }}">
-					<!-- <td class="center"><input type="checkbox" name="error[]"></td> -->
-					<td class="occurences vmiddle">
-						<span class="dot"></span>
-						<span class="count">{{ error.count|int }}</span>
-					</td>
-					<td>
-						<div class="error">
-							{% if error.message %}
-								{{ error.message }}
-							{% else %}
-								An unknown error has occurred
-							{% endif %}
-						</div>
-						<div class="detail">
-							{{ error.type }}
-							{% if error.tags %}
-								<i class="icon-tags tooltip-toggle" data-original-title="{% for tag in error.tags %}{{ tag }} {% endfor %}"></i>
-							{% endif %}
-						</div>
-					</td>
-					<td title="First seen: {{ date(error.timefirst) }}" class="date vmiddle">
-						Last occured {{ date(error.timelatest) }}<br/>
-						{% if error.claimedby %}
-							<i class="icon-heart tooltip-toggle" data-original-title="Claimed by {{ error.claimedby.name }}"></i>
-						{% endif %}
-						{% if error.comments %}
-							<i class="icon-comment tooltip-toggle"></i>{{ error.comments.__len__() }} comments
-						{% endif %}
-					</td>
-				</tr>
-			{% endfor %}
+			{% include ['errors/list.html'] %}
 		</tbody>
 
 	</table>
