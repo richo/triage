@@ -107,16 +107,15 @@ class ErrorQuerySet(QuerySet):
 
         return self.filter(qObjects)
 
-    def find_for_list(self, project, user, show):
+    def resolved(self, project):
         selected_project = project['id']
         self.filter(project=selected_project)
-        if 'hidden' in show:
-            self.filter(hiddenby__exists=True)
-        else:
-            self.filter(hiddenby__exists=False)
-        if 'unclaimed' in show:
-            self.filter(claimedby__exists=False)
-        return self
+        return self.filter( hiddenby__exists=True)
+
+    def active(self, project):
+        selected_project = project['id']
+        self.filter(project=selected_project)
+        return self.filter( hiddenby__exists=False)
 
 
 class Error(Document):

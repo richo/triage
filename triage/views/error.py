@@ -10,33 +10,56 @@ from deform import Form, ValidationFailure
 from time import time
 
 
-@view_config(route_name='error_list', permission='authenticated')
-def list(request):
+def get_errors(request):
     available_projects = request.registry.settings['projects']
     selected_project = get_selected_project(request)
 
-    search = request.params.get('search', '')
-    show = request.GET.getall('show')
+    search = request.GET.get('search', '')
+    show = request.GET.get('show', 'open') # open, resolved, mine
     tags = request.GET.getall('tags')
-    users = request.GET.getall('users')
-    order_by = request.params.get('order', False)
-    direction = request.params.get('direction', False)
+    order_by = request.GET.get('order', 'date')
+    direction = request.GET.get('direction', 'asc')
+    start = request.GET.get('start', 0)
+    end = start + 20
 
-    errors = Error.objects.find_for_list(selected_project, request.user, show)
+    if show == 'open':
+        errors = Error.objects.active(selected_project)
+    elif show == 'resolved':
+        errors = Error.objects.resolved(selected_project)
+    elif show == 'mine':
+        errors = Error.objects.active(selected_project).claimedby(user).filter(claimedby=request.user)
 
     if search:
-        errors = errors.search(search)
+        errors.search(search)
 
     if tags:
         errors.filter(tags__in=tags)
+ 
+    if direction == 'desc':
+        order_by = '-' + order_by
+    
+    return errors.order_by(order_by)[start:end]
+    
 
-    if users:
-        errors.filter(claimedby__in=users)
+@view_config(route_name='error_list', permission='authenticated', xhr=True, renderer='errors/list.html')
+def error_list(request):
+    return {
+        'errors': get_errors(request)
+    }
 
-    if order_by != False and errors.count():
-        if direction and direction == 'desc':
-            order_by = '-' + order_by
-        errors.order_by(order_by)
+
+@view_config(route_name='error_list', permission='authenticated')
+def error_page(request):
+    available_projects = request.registry.settings['projects']
+    selected_project = get_selected_project(request)
+
+    search = request.GET.get('search', '')
+    show = request.GET.get('show', 'open') # open, resolved, mine
+    tags = request.GET.getall('tags')
+    start = request.GET.get('start', 0)
+    end = start + 20
+
+    errors = get_errors(request)
 
     page = request.params.get('page', '1')
     paginator = Paginator(errors, size_per_page=20, current_page=page)
@@ -50,7 +73,6 @@ def list(request):
         'show': show,
         'tags': Tag.objects(),
         'users': User.objects(),
-        'get_error_count': lambda x: Error.objects.find_for_list(selected_project, request.user, x).count()
     }
 
     return render_to_response('error-list.html', params)
