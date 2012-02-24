@@ -46,7 +46,10 @@ def get_errors(request):
 
 @view_config(route_name='error_list', permission='authenticated', xhr=True, renderer='errors/list.html')
 def error_list(request):
+    selected_project = get_selected_project(request)
+
     return {
+        'selected_project': get_selected_project(request),
         'errors': get_errors(request)
     }
 
