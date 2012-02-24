@@ -10,12 +10,12 @@
 	</div>
 </div>
 
-<ul class="nav nav-tabs">
-  <li class="active">
-    <a href="#">Open</a>
-  </li>
-  <li><a href="#">Resolved</a></li>
-  <li><a href="#">Mine</a></li>
+<ul id="error-tabs" class="nav nav-tabs" data-show="{{show}}">
+	<li class="open">
+		<a href="{{route_url('error_list', project=selected_project.id)}}">Open</a>
+	</li>
+	<li class="resolved"><a href="{{route_url('error_list', project=selected_project.id)}}?show=hidden">Resolved</a></li>
+	<li class="mine"><a href="">Mine</a></li>
 </ul>
 {% endblock %}
 
