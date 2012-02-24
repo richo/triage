@@ -387,10 +387,6 @@ body {
 	left: 0;
 	bottom: 0;
 	width: 100%;
-}
-
-.pane .pane-inner {
-	margin: 0 15px 0 15px;
 	box-shadow: 0 0px 5px 3px #CCCCCC;
 }
 
