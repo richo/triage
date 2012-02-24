@@ -1,44 +1,22 @@
 {% extends "layout/fluid.html" %}
 
-{% block sidebar %}
+{% block middlebar %}
+<div class="search">
+	<div class="input-prepend">
+		<span class="add-on"><i class="icon-search"></i></span>
+		<form action="{{ set_params({}) }}" method="get">
+			<input type="text" name="search" placeholder="Search" value="{{ search }}" class="span2" />
+		</form>
+	</div>
+</div>
 
-	<h5>Search</h5>
-	<form action="{{ set_params({}) }}" method="get">
-		<input type="text" name="search" placeholder="Search" value="{{ search }}">
-	</form>
-
-	{% if tags %}
-		<h5>Tags</h5>
-		<ul class="tag-list">
-			{% for tag in tags %}
-				<li class="{{ switch(has_param(tags=tag.tag)) }}">
-					<a href="{{ toggle_param(tags=tag.tag) }}">{{ tag.tag }}</a>
-				</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
-
-	{% if users %}
-		<h5>Users</h5>
-		<ul class="tag-list">
-			{% for user in users %}
-				<li class="{{ switch(has_param(users=user.id)) }}">
-					<a href="{{ toggle_param(users=user.id) }}">{{ user.name }}</a>
-				</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
-
-	<h5>Show</h5>
-	<ul class="tag-list">
-		<li class="{{ switch(has_param(show='unclaimed')) }}">
-			<a href="{{ toggle_param(show='unclaimed') }}">Unclaimed</a>
-		</li>
-		<li class="{{ switch(has_param(show='hidden')) }}">
-			<a href="{{ toggle_param(show='hidden') }}">Hidden</a>
-		</li>
-	</ul>
-
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#">Open</a>
+  </li>
+  <li><a href="#">Resolved</a></li>
+  <li><a href="#">Mine</a></li>
+</ul>
 {% endblock %}
 
 
@@ -53,47 +31,38 @@
 <div id="information">
 
 	<table class="table table-bordered table-striped">
-
-		<thead>
-			<tr>
-				<!-- <th></th> -->
-				<th class="{{ switch(has_param(order='count')) }}"><a href="{{ set_params({'order': 'count', 'direction': 'asc'}) }}">#</a></th>
-				<th class="{{ switch(has_param(order='message')) }}"><a href="{{ set_params({'order': 'message', 'direction': 'asc'}) }}">Latest Message</a></th>
-				<th class="{{ switch(has_param(order='type')) }}"><a href="{{ set_params({'order': 'type', 'direction': 'asc'}) }}">Type</a></th>
-				<th class="{{ switch(has_param(order='tags')) }}"><a href="{{ set_params({'order': 'tags', 'direction': 'asc'}) }}">Tags</a></th>
-				<th class="{{ switch(has_param(order='timelatest')) }}"><a href="{{ set_params({'order': 'timelatest', 'direction': 'asc'}) }}">Last seen</a></th>
-			</tr>
-		</thead>
-
 		<tbody>
 			{% for error in errors %}
 				<tr class="{{error.get_row_classes(user)}}">
 					<!-- <td class="center"><input type="checkbox" name="error[]"></td> -->
-					<td>
-						{{ error.count|int }}
+					<td class="occurences">
+						<span class="dot"></span>
+						<span class="count">{{ error.count|int }}</span>
 					</td>
 					<td>
-						<a href="{{route_url('error_view', project=selected_project.id, id=error._id)}}" title="error.value.message">
+						<a href="{{route_url('error_view', project=selected_project.id, id=error._id)}}" title="error.value.message" class="error">
 							{% if error.message %}
 								{{ error.message|truncate(length=100) }}
 							{% else %}
 								An unknown error has occurred
 							{% endif %}
 						</a>
+						<div class="detail">
+							{{ error.type }}
+							{% if error.tags %}
+								<i class="icon-tags tooltip-toggle" data-original-title="{% for tag in error.tags %}{{ tag }} {% endfor %}"></i>
+							{% endif %}
+						</div>
 					</td>
-					<td>{{ error.type }}</td>
-					<td>
+					<td title="First seen: {{ date(error.timefirst) }}" class="date">
+						Last occured {{ date(error.timelatest) }}<br/>
 						{% if error.claimedby %}
 							<i class="icon-heart tooltip-toggle" data-original-title="Claimed by {{ error.claimedby.name }}"></i>
 						{% endif %}
 						{% if error.comments %}
-							<i class="icon-comment tooltip-toggle" data-original-title="{{ error.comments.__len__() }} comments"></i>
-						{% endif %}
-						{% if error.tags %}
-							<i class="icon-tags tooltip-toggle" data-original-title="{% for tag in error.tags %}{{ tag }} {% endfor %}"></i>
+							<i class="icon-comment tooltip-toggle"></i>{{ error.comments.__len__() }} comments
 						{% endif %}
 					</td>
-					<td title="First seen: {{ date(error.timefirst) }}">{{ date(error.timelatest) }}</td>
 				</tr>
 			{% endfor %}
 		</tbody>
