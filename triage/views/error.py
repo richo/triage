@@ -27,7 +27,7 @@ def get_errors(request):
     elif show == 'resolved':
         errors = Error.objects.resolved(selected_project)
     elif show == 'mine':
-        errors = Error.objects.active(selected_project).claimedby(user).filter(claimedby=request.user)
+        errors = Error.objects.active(selected_project).filter(claimedby=request.user)
 
     if search:
         errors.search(search)

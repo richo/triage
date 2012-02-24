@@ -5,20 +5,23 @@
 	<div class="input-prepend">
 		<span class="add-on"><i class="icon-search"></i></span>
 		<form action="{{ set_params({}) }}" method="get">
-			<input type="text" name="search" placeholder="Search" value="{{ search }}" class="span2" />
+			<input type="text" name="search" placeholder="message, type, user" value="{{ search }}" class="span2" />
 		</form>
 	</div>
 </div>
 
 <ul id="error-tabs" class="nav nav-tabs" data-show="{{show}}">
-	<li class="open">
-		<a href="{{route_url('error_list', project=selected_project.id)}}">Open</a>
-	</li>
-	<li class="resolved"><a href="{{route_url('error_list', project=selected_project.id)}}?show=hidden">Resolved</a></li>
-	<li class="mine"><a href="">Mine</a></li>
+  <li class="open {{ switch(show=='open') }}">
+    <a href="?show=open">Open</a>
+  </li>
+  <li class="resolved {{ switch(show=='resolved') }}">
+  	<a href="?show=resolved">Resolved</a>
+  </li>
+  <li class="mine {{ switch(show=='mine') }}">
+  	<a href="?show=mine">Mine</a>
+  </li>
 </ul>
 {% endblock %}
-
 
 {% block navigation %}
 
@@ -42,7 +45,7 @@
 					<td>
 						<div class="error">
 							{% if error.message %}
-								{{ error.message|truncate(length=100) }}
+								{{ error.message }}
 							{% else %}
 								An unknown error has occurred
 							{% endif %}
