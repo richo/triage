@@ -1,6 +1,6 @@
 <div class="pane-view pane-summary">
 	<div class="summary">
-	
+
 		<dl>
 			{% if error.code %}
 			<dt>Code</dt>
@@ -40,7 +40,7 @@
 
 	</div>
 	<div class="tags">
-	
+
 	</div>
 </div>
 <div class="pane-view pane-backtrace">
@@ -124,79 +124,3 @@
 	{% endif %}
 
 </div>
-
-
-<!--
-
-{% block sidebar %}
-
-	{% if error.tags %}
-		<h5>Tags</h5>
-	{% endif %}
-
-	<div class="related-tags">
-		{% if error.tags %}
-			{% for tag in error.tags %}
-				<a href="{{ route_url('error_list', project=selected_project.id) }}?tags={{ tag }}"><span class="label">{{tag}}</span></a>
-			{% endfor %}
-		{% endif %}
-
-		{% if user and tag_form %}
-			{{ tag_form }}
-		{% endif %}
-	</div>
-
-
-
-{% endblock %}
-
-{% block content %}
-
-	{% block toolbar %}
-		<ul id="navigation" class="toolbar cf">
-			{% if error.hiddenby %}
-				<li><a title="Hidden by {{ error.hiddenby['name'] }}" href="{{ route_url('error_toggle_hide', project=selected_project.id, id=error._id) }}">Unhide Error</a></li>
-			{% else %}
-				<li><a href="{{ route_url('error_toggle_hide', project=selected_project.id, id=error._id) }}">Hide Error</a></li>
-			{% endif %}
-
-			{% if error.claimedby %}
-				{% if user['email'] == error.claimedby['email'] %}
-					<li class="pull-right"><a href="{{ route_url('error_toggle_claim', project=selected_project.id, id=error._id) }}">Unclaim Error</a></li>
-				{% else %}
-					<li class="pull-right no-link">Claimed by {{ error.claimedby['name'] }}</li>
-				{% endif %}
-			{% else %}
-				<li class="pull-right"><a href="{{ route_url('error_toggle_claim', project=selected_project.id, id=error._id) }}">Claim Error</a></li>
-			{% endif %}
-		</ul>
-	{% endblock %}
-
-	<div id="error">
-
-		<hgroup>
-			<h1>{{ error.type }}: {{ error.message }}</h1>
-			<h2>
-				{% if error.file %}
-					File "{{ error.file }}",
-				{% endif %}
-				{% if error.line %}
-					line {{ error.line }},
-				{% endif %}
-				{% if instance.backtrace %}
-					in {{ instance.backtrace[0].function }}
-				{% endif %}
-			</h2>
-		</hgroup>
-
-		<dl>
-
-
-	</div>
-
-	<h2>Stacktrace</h2>
-
-
-
-
-{% endblock %}

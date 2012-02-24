@@ -6,6 +6,8 @@ Triage.modules.errorList = (function($, app) {
 
 		$selector.siblings().removeClass('error-active');
 		$selector.addClass('error-active');
+
+		$('.pane .pane-inner').load($selector.data('url'));
 	};
 
 	var _moveItem = function(action) {

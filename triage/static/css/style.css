@@ -283,10 +283,16 @@ body {
 	display: none;
 	height: 200px;
 	border-bottom: 1px solid #CCCCCC;
+	overflow-y: scroll;
 }
 
 .pane.pane-open .pane-container {
 	display: block;
+}
+
+.pane .pane-view {
+	display: none;
+	height: 100%;
 }
 
 .pane .pane-actions {
