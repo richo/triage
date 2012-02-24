@@ -232,7 +232,7 @@ var pjax = $.pjax = function( options ) {
     } else {
       // If we got no data or an entire web page, go directly
       // to the page and let normal error handling happen.
-      if ( !$.trim(data) || /<html/i.test(data) )
+      if ( (!$.trim(data) || /<html/i.test(data)) && !options.allowEmptyData )
         return window.location = url
 
       this.html(data)
