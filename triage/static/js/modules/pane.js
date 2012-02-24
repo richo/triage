@@ -31,12 +31,31 @@ Triage.modules.pane = (function($, app) {
 			openAction(self, $selector);
 	};
 
+	var _moveItem = function(action) {
+		action = action || 'right';
+		var current = $('.pane .pane-actions li.pane-active');
+
+		if (!current.length) {
+			openAction($('.pane .pane-actions li:first-child a'));
+			return false;
+		}
+		else if (action == 'close' && current.length) {
+			closeAction(current.find('a'));
+		}
+		else if (action == 'right' && current.next().length) {
+			openAction(current.next().find('a'));
+		}
+		else if (action == 'left' && current.prev().length) {
+			openAction(current.prev().find('a'));
+		}
+
+		return false;
+	};
+
 	var bindHotKeys = function(self) {
-		jwerty.key('1', function () { $('.pane .pane-action-summary a').click(); });
-		jwerty.key('2', function () { $('.pane .pane-action-backtrace a').click(); });
-		jwerty.key('3', function () { $('.pane .pane-action-context a').click(); });
-		jwerty.key('4', function () { $('.pane .pane-action-similar-errors a').click(); });
-		jwerty.key('5', function () { $('.pane .pane-action-comments a').click(); });
+		jwerty.key('←', function (e) { e.stopPropagation(); return _moveItem('left'); });
+		jwerty.key('→', function (e) { e.stopPropagation(); return _moveItem('right'); });
+		jwerty.key('esc', function(e) { e.stopPropagation(); return _moveItem('close'); });
 	};
 
 	return {

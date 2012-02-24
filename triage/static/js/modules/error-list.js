@@ -8,18 +8,18 @@ Triage.modules.errorList = (function($, app) {
 		$selector.addClass('error-active');
 	};
 
-	var _moveItem = function(dir) {
-		var direction = dir || 'down';
+	var _moveItem = function(action) {
+		action = action || 'down';
 		var current = $('.error-list tr.error-active');
 
 		if (!current.length) {
 			bindAction($('.error-list tr:first-child'));
 			return false;
 		}
-		else if (direction == 'down' && current.next().length) {
+		else if (action == 'down' && current.next().length) {
 			bindAction(current.next());
 		}
-		else if (direction == 'up' && current.prev().length) {
+		else if (action == 'up' && current.prev().length) {
 			bindAction(current.prev());
 		}
 
