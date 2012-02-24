@@ -48,7 +48,7 @@ def error_list(request):
     }
 
 
-@view_config(route_name='error_list', permission='authenticated')
+@view_config(route_name='error_list', permission='authenticated', renderer='error-list.html')
 def error_page(request):
     available_projects = request.registry.settings['projects']
     selected_project = get_selected_project(request)
@@ -64,7 +64,7 @@ def error_page(request):
     page = request.params.get('page', '1')
     paginator = Paginator(errors, size_per_page=20, current_page=page)
 
-    params = {
+    return {
         'search': search,
         'errors': paginator.get_current_page(),
         'paginator': paginator,
@@ -74,8 +74,6 @@ def error_page(request):
         'tags': Tag.objects(),
         'users': User.objects(),
     }
-
-    return render_to_response('error-list.html', params)
 
 
 @view_config(route_name='error_view', permission='authenticated')
