@@ -31,8 +31,17 @@ Triage.modules.pane = (function($, app) {
 			openAction(self, $selector);
 	};
 
+	var bindHotKeys = function(self) {
+		jwerty.key('1', function () { $('.pane .pane-action-summary a').click(); });
+		jwerty.key('2', function () { $('.pane .pane-action-backtrace a').click(); });
+		jwerty.key('3', function () { $('.pane .pane-action-context a').click(); });
+		jwerty.key('4', function () { $('.pane .pane-action-similar-errors a').click(); });
+		jwerty.key('5', function () { $('.pane .pane-action-comments a').click(); });
+	};
+
 	return {
 		start: function() {
+			bindHotKeys(this);
 
 			$('.pane .pane-container').resizable({
 				handles: 'n',

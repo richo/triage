@@ -32,7 +32,7 @@
 	<table class="error-list table">
 		<tbody>
 			{% for error in errors %}
-				<tr class="{{error.get_row_classes(user)}}">
+				<tr class="{{error.get_row_classes(user)}}" data-hash="{{ error.id }}">
 					<!-- <td class="center"><input type="checkbox" name="error[]"></td> -->
 					<td class="occurences vmiddle">
 						<span class="dot"></span>
