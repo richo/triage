@@ -35,18 +35,18 @@
 			{% for error in errors %}
 				<tr class="{{error.get_row_classes(user)}}">
 					<!-- <td class="center"><input type="checkbox" name="error[]"></td> -->
-					<td class="occurences">
+					<td class="occurences vmiddle">
 						<span class="dot"></span>
 						<span class="count">{{ error.count|int }}</span>
 					</td>
 					<td>
-						<a href="{{route_url('error_view', project=selected_project.id, id=error._id)}}" title="error.value.message" class="error">
+						<div class="error">
 							{% if error.message %}
 								{{ error.message|truncate(length=100) }}
 							{% else %}
 								An unknown error has occurred
 							{% endif %}
-						</a>
+						</div>
 						<div class="detail">
 							{{ error.type }}
 							{% if error.tags %}
@@ -54,7 +54,7 @@
 							{% endif %}
 						</div>
 					</td>
-					<td title="First seen: {{ date(error.timefirst) }}" class="date">
+					<td title="First seen: {{ date(error.timefirst) }}" class="date vmiddle">
 						Last occured {{ date(error.timelatest) }}<br/>
 						{% if error.claimedby %}
 							<i class="icon-heart tooltip-toggle" data-original-title="Claimed by {{ error.claimedby.name }}"></i>

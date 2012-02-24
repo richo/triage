@@ -26,6 +26,10 @@ body {
 	padding: 10px;
 }
 
+.vmiddle, td.vmiddle {
+	vertical-align: middle;
+}
+
 /*	Nav Bar
 	------------------------------------------------------------ */
 
@@ -123,7 +127,7 @@ body {
 	zoom: 1;
 	*display: inline;
 
-	background: #F9F9F9;
+	background-color: #F9F9F9;
 	border-top: 1px solid #DDD;
 	border-bottom: 1px solid #DDD;
 } .paginator li:first-child {
@@ -143,11 +147,11 @@ body {
 }
 
 .paginator li a:hover {
-	background: #DDDDDD;
+	background-color: #DDDDDD;
 }
 
 .paginator li.active a {
-	background: #DDDDDD;
+	background-color: #DDDDDD;
 }
 
 /*	Middle bar
@@ -158,6 +162,7 @@ body {
 
 /*	Error List
 	------------------------------------------------------------ */
+
 .container-fluid .content {
 	padding: 20px 0;
 	margin-bottom: 50px;
@@ -195,13 +200,7 @@ body {
 	color: #aaa;
 }
 
-
-#information tr.unseen td {
-	font-weight: 500;
-}
-
 #information td.occurences {
-	padding-top: 16px;
 	width: 60px;
 	text-align: left;
 }
@@ -265,15 +264,16 @@ body {
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	box-shadow: 0 0px 5px 3px #CCCCCC;
+	box-shadow: 0 0px 7px 2px #DDDDDD;
 }
 
-.pane .pane-handle {
+.pane .ui-resizable-handle {
 	height: 5px;
+	cursor: row-resize;
 }
 
 .pane .pane-container {
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 }
 
 .pane .pane-container {
@@ -289,10 +289,10 @@ body {
 .pane .pane-actions {
 	padding: 5px;
 	margin: 0;
-	background: #FFFFFF;
+	background-color: #FFFFFF;
 }
 
 .pane .pane-actions .pane-active a {
 	text-decoration: none;
-	background-color: #EEE;
+	background-color: #DDDDDD;
 }
