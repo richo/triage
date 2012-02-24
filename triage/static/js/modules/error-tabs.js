@@ -5,10 +5,17 @@ Triage.modules.errorTabs = (function($, app) {
 		$container: null,
 		show: null,
 		start: function() {
+			var self = this;
+
 			this.$container = $("#error-tabs");
+
 			this.show = this.$container.data("show").toString();
 
-			this.$container.find("a[data-pjax]").pjax();
+			this.$container.find("a").pjax(".error-list tbody");
+
+			$(".error-list tbody").on("pjax:end", function(){
+				self.updateActive();
+			});
 		},
 		updateActive: function() {
 			this.$container.find("li").removeClass("active");
