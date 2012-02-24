@@ -389,18 +389,23 @@ body {
 	width: 100%;
 }
 
+.pane .pane-inner {
+	margin: 0 15px 0 15px;
+	box-shadow: 0 0px 5px 3px #CCCCCC;
+}
+
 .pane .pane-handle {
 	height: 5px;
-	background: #CCCCCC;
 }
 
 .pane .pane-container {
-	background: #EEEEEE;
+	background: #FFFFFF;
 }
 
 .pane .pane-container {
 	display: none;
 	height: 200px;
+	border-bottom: 1px solid #CCCCCC;
 }
 
 .pane.pane-open .pane-container {
@@ -410,7 +415,7 @@ body {
 .pane .pane-actions {
 	padding: 5px;
 	margin: 0;
-	background: #CCCCCC;
+	background: #FFFFFF;
 }
 
 .pane .pane-actions .pane-active a {
