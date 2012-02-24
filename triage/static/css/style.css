@@ -176,19 +176,22 @@ body {
 	padding: 0 20px;
 }
 
-#information tr:hover td {
-	background-color: #eee;
+.error-list {
+	border: none;
 }
 
-#information td {
+.error-list tr:hover td {
+	background-color: #EEEEEE;
+}
+
+.error-list tr.error-active td {
+	background-color: #EEEEEE;
+}
+
+.error-list td {
 	border: none;
 	margin-bottom: 5px;
-	background-color: #fff;
-}
-
-
-#information table {
-	border: none;
+	background-color: #FFFFFF;
 }
 
 #information a.error {

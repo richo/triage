@@ -1,34 +1,34 @@
 Triage.modules.pane = (function($, app) {
 	"use strict";
 
-	var openAction = function(self, trigger) {
-		var $trigger = trigger || $(self).parent(),
-			$pane = $trigger.parents('.pane');
+	var openAction = function(self, selector) {
+		var $selector = selector || $(self).parent(),
+			$pane = $selector.parents('.pane');
 
-		$trigger.siblings().removeClass('pane-active');
-		$trigger.addClass('pane-active');
+		$selector.siblings().removeClass('pane-active');
+		$selector.addClass('pane-active');
 		$pane.addClass('pane-open');
 		$('body').addClass('pane-open');
 
 	};
 
-	var closeAction = function(self, trigger) {
-		var $trigger = trigger || $(self).parent(),
-			$pane = $trigger.parents('.pane');
+	var closeAction = function(self, selector) {
+		var $selector = selector || $(self).parent(),
+			$pane = $selector.parents('.pane');
 
-		$trigger.removeClass('pane-active');
+		$selector.removeClass('pane-active');
 		$pane.removeClass('pane-open');
 		$('body').removeClass('pane-open');
 
 	};
 
 	var bindActions = function(self) {
-		var $trigger = $(self).parent();
+		var $selector = $(self).parent();
 
-		if ($trigger.hasClass('pane-active'))
-			closeAction(self, $trigger);
+		if ($selector.hasClass('pane-active'))
+			closeAction(self, $selector);
 		else
-			openAction(self, $trigger);
+			openAction(self, $selector);
 	};
 
 	return {
@@ -48,9 +48,9 @@ Triage.modules.pane = (function($, app) {
 			});
 
 			$(document).on('click', 'body.pane-open', function(e) {
-				var $trigger = $(e.target);
+				var $selector = $(e.target);
 
-				if (!$trigger.hasClass('pane') && !$trigger.parents('.pane').length)
+				if (!$selector.hasClass('pane') && !$selector.parents('.pane').length)
 					closeAction($('.pane .pane-actions a:first-child'));
 			});
 
