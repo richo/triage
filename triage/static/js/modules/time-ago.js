@@ -7,10 +7,10 @@ Triage.modules.timeAgo = (function($, app) {
 		var date = new Date(time),
 			diff = (((new Date()).getTime() - date.getTime()) / 1000),
 			day_diff = Math.floor(diff / 86400);
-				
+
 		if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
 			return;
-				
+
 		var string = day_diff === 0 && (
 				diff < 60 && "just now" ||
 				diff < 120 && "1 minute ago" ||

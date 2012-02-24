@@ -4,9 +4,9 @@ Triage.modules.dropdown = (function($, app) {
 	return {
 		start: function() {
 			$('.dropdown-toggle').dropdown();
-		    $('body').tooltip({
-		      selector: ".tooltip-toggle"
-		    });		
+			$('body').tooltip({
+				selector: ".tooltip-toggle"
+			});
 		},
 		stop: function() {
 		}
