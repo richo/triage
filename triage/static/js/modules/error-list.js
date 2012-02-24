@@ -14,7 +14,6 @@ Triage.modules.errorList = (function($, app) {
 
 		if (!current.length) {
 			bindAction($('.error-list tr:first-child'));
-			return false;
 		}
 		else if (action == 'down' && current.next().length) {
 			bindAction(current.next());
@@ -36,7 +35,7 @@ Triage.modules.errorList = (function($, app) {
 			bindHotKeys(this);
 
 			$(document).on('click', '.error-list tr', function() {
-				bindAction();
+				bindAction(this);
 			});
 		},
 		stop: function() { },

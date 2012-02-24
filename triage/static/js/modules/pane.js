@@ -9,7 +9,6 @@ Triage.modules.pane = (function($, app) {
 		$selector.addClass('pane-active');
 		$pane.addClass('pane-open');
 		$('body').addClass('pane-open');
-
 	};
 
 	var closeAction = function(self, selector) {
@@ -37,7 +36,6 @@ Triage.modules.pane = (function($, app) {
 
 		if (!current.length) {
 			openAction($('.pane .pane-actions li:first-child a'));
-			return false;
 		}
 		else if (action == 'close' && current.length) {
 			closeAction(current.find('a'));
