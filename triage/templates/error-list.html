@@ -11,11 +11,11 @@
 </div>
 
 <ul id="error-tabs" class="nav nav-tabs" data-show="{{show}}">
-	<li class="open {{ switch(show=='open') }}">
+	<li class="{{ switch(show=='open') }}" data-name="open">
 		<a href="{{route_url('error_list', project=selected_project.id)}}" data-pjax="#information">Open</a>
 	</li>
-	<li class="resolved {{ switch(show=='resolved') }}"><a href="{{route_url('error_list', project=selected_project.id)}}?show=resolved" data-pjax="#information">Resolved</a></li>
-	<li class="mine {{ switch(show=='mine') }}"><a href="{{route_url('error_list', project=selected_project.id)}}?show=mine" data-pjax="#information">Mine</a></li>
+	<li class="{{ switch(show=='resolved') }}" data-name="resolved"><a href="{{route_url('error_list', project=selected_project.id)}}?show=resolved" data-pjax="#information">Resolved</a></li>
+	<li class="{{ switch(show=='mine') }}" data-name="mine"><a href="{{route_url('error_list', project=selected_project.id)}}?show=mine" data-pjax="#information">Mine</a></li>
 </ul>
 {% endblock %}
 

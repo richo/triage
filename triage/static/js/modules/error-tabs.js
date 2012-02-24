@@ -11,21 +11,30 @@ Triage.modules.errorTabs = (function($, app) {
 
 			this.show = this.$container.data("show").toString();
 
-			this.$container.find("a").pjax(".error-list tbody");
+			var $list = this.$container.find("a");
 
-			$(".error-list tbody").on("pjax:end", function(){
+			$list.pjax(".error-list tbody", {
+				replace: false,
+				allowEmptyData: true
+			});
+
+			$list.on("click", function() {
+				self.show = $(this).parent().data("name");
+			});
+
+			$(".error-list tbody").on("pjax:end", function(e){
 				self.updateActive();
 			});
 		},
 		updateActive: function() {
 			this.$container.find("li").removeClass("active");
 
-			if (this.isShow('hidden')) {
-				this.$container.find(".resolved").addClass("active");
+			if (this.isShow('resolved')) {
+				this.$container.find("[data-name='resolved']").addClass("active");
 			} else if (this.isShow('mine')) {
-				this.$container.find(".mine").addClass("active");
+				this.$container.find("[data-name='mine']").addClass("active");
 			} else {
-				this.$container.find(".open").addClass("active");
+				this.$container.find("[data-name='open']").addClass("active");
 			}
 		},
 		stop: function() {
