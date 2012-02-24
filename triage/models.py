@@ -39,7 +39,7 @@ class User(Document):
 
 class Tag(Document):
     meta = {
-        'ordering' : ['-count']
+        'ordering': ['-count']
     }
 
     tag = StringField(required=True)
@@ -111,9 +111,9 @@ class ErrorQuerySet(QuerySet):
         selected_project = project['id']
         self.filter(project=selected_project)
         if 'hidden' in show:
-            self.filter( hiddenby__exists=True)
+            self.filter(hiddenby__exists=True)
         else:
-            self.filter( hiddenby__exists=False)
+            self.filter(hiddenby__exists=False)
         if 'unclaimed' in show:
             self.filter(claimedby__exists=False)
         return self
@@ -122,7 +122,7 @@ class ErrorQuerySet(QuerySet):
 class Error(Document):
     meta = {
         'queryset_class': ErrorQuerySet,
-        'ordering' : ['-timelatest']
+        'ordering': ['-timelatest']
     }
 
     hash = StringField(required=True)
@@ -178,5 +178,3 @@ class Error(Document):
         self.hiddenby and classes.append('hidden')
         self.claimedby == user and classes.append('mine')
         return ' '.join(classes)
-
-
