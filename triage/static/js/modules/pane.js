@@ -1,59 +1,81 @@
 Triage.modules.pane = (function($, app) {
 	"use strict";
 
-	var openAction = function(self, selector) {
-		var $selector = selector || $(self).parent(),
-			$pane = $selector.parents('.pane');
-
-		$selector.siblings().removeClass('pane-active');
-		$selector.addClass('pane-active');
-		$pane.addClass('pane-open');
-		$('body').addClass('pane-open');
+	var hidePane = function() {
+		$('.pane').removeClass('pane-open');
+		$('body').removeClass('pane-open');
+		$('.pane-padding').height(0);
+		$('.pane').find('.pane-active').removeClass('pane-active');
 	};
 
-	var closeAction = function(self, selector) {
-		var $selector = selector || $(self).parent(),
-			$pane = $selector.parents('.pane');
+	var showPane = function() {
+		$('.pane').addClass('pane-open');
+		$('body').addClass('pane-open');
+		$('.pane-padding').height($('.pane').height());
+		selectTab();
+	};
 
-		$selector.removeClass('pane-active');
-		$pane.removeClass('pane-open');
-		$('body').removeClass('pane-open');
+	var togglePane = function() {
+	
+		if ($('body').hasClass('pane-open'))
+			return hidePane();
+		return showPane();
+	};
 
+	var selectTab = function(tab) {
+
+		if (!tab) {
+			var current = $('.pane .pane-actions li.pane-active');
+			if (current.length) {
+				tab = current;
+			} else {
+				tab = $('.pane .pane-actions li:first-child');
+			}
+		}
+		tab = $(tab);
+		tab.siblings().removeClass('pane-active');
+		tab.addClass('pane-active');
+		updateTabPane();	
+	};
+
+	var updateTabPane = function() {
+		var tab = $('.pane-active');
+		if (tab.length) {	
+			var active = $('.pane-'+tab.data('view'));
+			active.siblings().hide();
+			active.show();
+		}		
 	};
 
 	var bindActions = function(self) {
 		var $selector = $(self).parent();
 
 		if ($selector.hasClass('pane-active'))
-			closeAction(self, $selector);
-		else
-			openAction(self, $selector);
+			hidePane();
+		else {
+			showPane();
+			selectTab($selector);
+		}
 	};
 
 	var _moveItem = function(action) {
-		action = action || 'right';
 		var current = $('.pane .pane-actions li.pane-active');
 
-		if (!current.length) {
-			openAction($('.pane .pane-actions li:first-child a'));
-		}
-		else if (action == 'close' && current.length) {
-			closeAction(current.find('a'));
-		}
-		else if (action == 'right' && current.next().length) {
-			openAction(current.next().find('a'));
+		if (action == 'right' && current.next().length) {
+			showPane();
+			selectTab(current.next());
 		}
 		else if (action == 'left' && current.prev().length) {
-			openAction(current.prev().find('a'));
+			showPane();
+			selectTab(current.prev());
 		}
-
 		return false;
 	};
 
 	var bindHotKeys = function(self) {
 		jwerty.key('←', function (e) { e.stopPropagation(); return _moveItem('left'); });
 		jwerty.key('→', function (e) { e.stopPropagation(); return _moveItem('right'); });
-		jwerty.key('esc', function(e) { e.stopPropagation(); return _moveItem('close'); });
+		jwerty.key('space', function(e) { e.stopPropagation(); togglePane(); return false; });
 	};
 
 	return {
@@ -67,21 +89,27 @@ Triage.modules.pane = (function($, app) {
 				$(this).css('top', 'auto');
 			}).on('resizestop', function() {
 				$.cookie('pane-size', $(this).height());
+				$('.pane-padding').height($(this).height());
 			});
 
 			$('.pane .pane-actions a').on('click', function() {
 				bindActions(this);
 			});
 
-			$(document).on('click', 'body.pane-open', function(e) {
-				var $selector = $(e.target);
+			if ($.cookie('pane-size')) {
+				$('.pane .pane-container').height($.cookie('pane-size'));
+				$('.pane-padding').height($.cookie('pane-size'));
+			}
 
-				if (!$selector.hasClass('pane') && !$selector.parents('.pane').length)
-					closeAction($('.pane .pane-actions a:first-child'));
+			app.on('errorlist.selection.activated', function() {
+				showPane();
 			});
 
-			if ($.cookie('pane-size'))
-				$('.pane .pane-container').height($.cookie('pane-size'));
+			app.on('errorlist.selection.changed', function(selection) {
+				$('.pane .pane-inner').load(selection.data('url'), function(){
+					updateTabPane();	
+				});
+			});
 
 		},
 		stop: function() { }

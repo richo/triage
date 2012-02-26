@@ -45,17 +45,14 @@
 </div>
 <div class="pane-view pane-backtrace">
 
-	<table class="bordered-table zebra-striped">
-
+	<table>
 		<thead>
 			<tr>
 				<th>Method</th>
 				<th>File</th>
 			</tr>
 		</thead>
-
 		<tbody>
-
 			{% for row in instance.backtrace %}
 				<tr>
 					<td>
@@ -70,9 +67,7 @@
 					</td>
 				</tr>
 			{% endfor %}
-
 		</tbody>
-
 	</table>
 
 </div>

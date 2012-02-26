@@ -1,13 +1,32 @@
 Triage.modules.errorList = (function($, app) {
 	"use strict";
 
-	var bindAction = function(self, selector) {
-		var $selector = selector || $(self);
+	var currentSelection = null;
 
-		$selector.siblings().removeClass('error-active');
-		$selector.addClass('error-active');
+	var changeSelection = function(selected) {
+		selected = $(selected);
 
-		$('.pane .pane-inner').load($selector.data('url'));
+		selected.siblings().removeClass('error-active');
+		selected.addClass('error-active');
+
+		if (selected.is(':first-child'))
+			$('body').scrollTop(0);
+		else if (selected.is(':last-child'))
+			$('body').scrollTop($('body').height());			
+		else {
+			if (selected.offset().top < $('body').scrollTop())
+				$('body').scrollTop(selected.offset().top);
+			
+			if (selected.offset().top > $('.pane').offset().top)
+				$('body').scrollTop($('body').scrollTop() + selected.height());
+		}
+
+		currentSelection = selected.data('errorid');
+		app.trigger('errorlist.selection.changed', selected);
+	}
+
+	var activateSelection = function() {
+		app.trigger('errorlist.selection.activated');
 	};
 
 	var _moveItem = function(action) {
@@ -15,13 +34,13 @@ Triage.modules.errorList = (function($, app) {
 		var current = $('.error-list tr.error-active');
 
 		if (!current.length) {
-			bindAction($('.error-list tr:first-child'));
+			changeSelection($('.error-list tr:first-child'));
 		}
 		else if (action == 'down' && current.next().length) {
-			bindAction(current.next());
+			changeSelection(current.next());
 		}
 		else if (action == 'up' && current.prev().length) {
-			bindAction(current.prev());
+			changeSelection(current.prev());
 		}
 
 		return false;
@@ -36,8 +55,9 @@ Triage.modules.errorList = (function($, app) {
 		start: function() {
 			bindHotKeys(this);
 
-			$(document).on('click', '.error-list tr', function() {
-				bindAction(this);
+			$('.error-list').on('click', '.error-list tr', function() {
+				changeSelection(this);
+				activateSelection();
 			});
 		},
 		stop: function() { },
