@@ -180,15 +180,15 @@ body {
 	border: none;
 }
 
-.error-list tr {
+.table tbody tr:hover td {
+	background-color: inherit;
+}
+
+.error-list tbody tr td {
 	cursor: pointer;
 }
 
-.error-list tr:hover td {
-	background-color: #EEEEEE;
-}
-
-.error-list tr.error-active td {
+.error-list tbody tr.error-active td {
 	background-color: #EEEEEE;
 }
 
