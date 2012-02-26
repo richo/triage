@@ -5,7 +5,7 @@ Triage.modules.pane = (function($, app) {
 		$('.pane').removeClass('pane-open');
 		$('body').removeClass('pane-open');
 		$('.pane-padding').height(0);
-		$('.pane').find('.pane-active').removeClass('pane-active');
+		$('.pane').find('.pane-active').removeClass('pane-active active');
 	};
 
 	var showPane = function() {
@@ -33,8 +33,8 @@ Triage.modules.pane = (function($, app) {
 			}
 		}
 		tab = $(tab);
-		tab.siblings().removeClass('pane-active');
-		tab.addClass('pane-active');
+		tab.siblings().removeClass('pane-active active');
+		tab.addClass('pane-active active');
 		updateTabPane();	
 	};
 
