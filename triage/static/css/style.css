@@ -281,6 +281,8 @@ body {
 
 .pane .pane-container {
 	background-color: #FFFFFF;
+	padding-left:20px;
+	padding-right:20px;
 }
 
 .pane .pane-container {
@@ -308,4 +310,34 @@ body {
 .pane .pane-actions .pane-active a {
 	text-decoration: none;
 	background-color: #DDDDDD;
+}
+
+.summary-tags {
+	position: absolute;
+	right:30px;
+	top:30px;
+	width: 150px;
+}
+
+.tag-list {
+	list-style-type: none;
+	margin:0 0 4px 0;
+}
+
+.tag-list li {
+	padding: 2px 0;
+}
+
+.tag-delete {
+	cursor: pointer;
+}
+
+.navbar .logo {
+	background-color: white;
+	background: url(../img/triage.png);
+	display: inline-block;
+	float:left;
+	margin-right: 5px;
+	height:40px;
+	width:40px;
 }

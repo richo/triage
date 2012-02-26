@@ -84,7 +84,7 @@ def error_page(request):
 
 
 
-@view_config(route_name='error_view', permission='authenticated', xhr=True)
+@view_config(route_name='error_view', permission='authenticated')
 def view(request):
     available_projects = request.registry.settings['projects']
     selected_project = get_selected_project(request)
@@ -141,9 +141,6 @@ def view(request):
                 return HTTPFound(location=url)
             except ValidationFailure, e:
                 tag_form_render = e.render()
-    else:
-        comment_form_render = comment_form.render()
-        tag_form_render = tag_form.render()
 
     if request.user not in error.seenby:
         error.seenby.append(request.user)
@@ -155,8 +152,8 @@ def view(request):
         'other_errors': error.instances,
         'selected_project': selected_project,
         'available_projects': available_projects,
-        'comment_form': Markup(comment_form_render),
-        'tag_form': Markup(tag_form_render),
+        'comment_form': comment_form,
+        'tag_form': tag_form,
     }
 
     try:

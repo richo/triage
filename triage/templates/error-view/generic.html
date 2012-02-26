@@ -1,51 +1,42 @@
 <div class="pane-view pane-summary">
+	<h3>{{error.message}}</h3>
+	<h4>{{error.type}}</h4>
 	<div class="summary">
 
-		<dl>
-			{% if error.code %}
-			<dt>Code</dt>
-			<dd>{{ error.code }}</dd>
-			{% endif %}
-
-			{% if error.severity %}
-			<dt>Severity</dt>
-			<dd>{{ error.severity }}</dd>
-			{% endif %}
-
-			{% if error.language %}
-			<dt>Language</dt>
-			<dd>{{ error.language }}</dd>
-			{% endif %}
-
-			{% if error.level %}
-			<dt>Level</dt>
-			<dd>{{ error.level }}</dd>
-			{% endif %}
-
-			{% if error.timestamp %}
-			<dt>Timestamp</dt>
-			<dd><span data-timeago="{{ error.timestamp }}"></span></dd>
-			{% endif %}
-
-			{% if error.application %}
-			<dt>Application</dt>
-			<dd>{{ error.application }}</dd>
-			{% endif %}
-
-			{% if error.host %}
-			<dt>Host</dt>
-			<dd>{{ error.host }}</dd>
-			{% endif %}
-		</dl>
-
 	</div>
-	<div class="tags">
-
+	<div class="summary-tags well">
+		{% if error.claimedby %}
+			{% if user == error.claimedby %}
+				<button class="btn btn-warning unclaim-btn">Unclaim</button>
+			{% else %}
+				<span>Claimed by {{error.claimedby.name}}</span>
+			{% endif %}
+		{% else %}
+			<button class="btn btn-primary claim-btn">Claim</button>
+		{% endif %}
+		<h5>Tags</h5>
+		{% if error.tags %}
+			<ul class="tag-list">
+			{% for tag in error.tags %}
+				<li><span class="label">{{tag}} 
+					<i class="icon-remove icon-white tag-delete" data-tag="{{tag}}" title="Remove"></i>
+				</span></li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+		{% if user and tag_form %}
+			<form method="post" class="tag-form">
+			{% for f in tag_form %}
+				{{ f.render()|safe }}
+			{% endfor %}
+			</form>
+		{% endif %}
 	</div>
 </div>
 <div class="pane-view pane-backtrace">
+	<h3>Backtrace</h3>
 
-	<table>
+	<table class="table table-striped table-condensed">
 		<thead>
 			<tr>
 				<th>Method</th>
@@ -72,20 +63,24 @@
 
 </div>
 <div class="pane-view pane-context">
-	<dl class="related-errors">
+	<h3>Context</h3>
+	<table class="table table-striped table-condensed">
 	{% if instance.context %}
 		{% for key in instance.context %}
-			<dt>{{key}}</dt>
-			<dd>{{ instance.context[key] }}</dd>
+			<tr>
+				<td>{{key}}</td>
+				<td>{{ instance.context[key] }}</td>
+			</tr>
 		{% endfor %}
 	{% endif %}
-	</dl>
+	</table>
 
 </div>
 
 
 
 <div class="pane-view pane-similar">
+	<h3>Similar Errors</h3>
 	<dl class="related-errors">
 		{% for e in other_errors[:10] %}
 			<dt><a href="{{ route_url('error_view', project=selected_project.id, id=e._id) }}">{{e.message}}</a></dt>
@@ -97,25 +92,24 @@
 
 
 <div class="pane-view pane-comments">
-
-	{% if user and comment_form %}
-		{{ comment_form }}
+	<h3>Comments</h3>
+	{% if error.comments %}
+	<dl id="comments">
+		{% for row in error.comments %}
+			<dt class="comments-info">
+				{{ row.author.name }} {{ date(row.created) }}:
+			</dt>
+			<dd class="comments-comment">
+				{{ row.content }}
+			</dd>
+		{% endfor %}
+	</dl>
 	{% endif %}
 
-	{% if error.comments %}
-	<ul id="comments">
-		{% for row in error.comments %}
-			<li class="comment">
-				<div class="comments-info">
-					About <span data-timeago="{{ row.created }}">{{ row.created }}</span> {{ row.author.name }} said:
-				</div>
-				<div class="comments-comment">
-					{{ row.content }}
-				</div>
-				</td>
-			</li>
+	{% if user and comment_form %}
+		{% for f in comment_form %}
+			{{ f.render()|safe }}
 		{% endfor %}
-	</ul>
 	{% endif %}
 
 </div>

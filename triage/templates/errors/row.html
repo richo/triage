@@ -18,19 +18,21 @@
 		<div class="detail">
 			{{ error.type }}
 			{% if error.tags %}
-				<i class="icon-tags tooltip-toggle" data-original-title="{% for tag in error.tags %}{{ tag }} {% endfor %}"></i>
+				{% for tag in error.tags %}
+					<span class="label label-{{ tag }}">{{ tag }}</span>
+				{% endfor %}
 			{% endif %}
 		</div>
 		{% endblock %}
 	</td>
-	<td title="First seen: {{ date(error.timefirst) }}" class="date vmiddle">
+	<td data-original-title="First seen: {{ date(error.timefirst) }}" class="date vmiddle tooltip-toggle">
 		{% block right_cell %}
 		Last occured {{ date(error.timelatest) }}<br/>
 		{% if error.claimedby %}
-			<i class="icon-heart tooltip-toggle" data-original-title="Claimed by {{ error.claimedby.name }}"></i>
+			<i class="icon-star"></i>&nbsp;{{ error.claimedby.name }}
 		{% endif %}
 		{% if error.comments %}
-			<i class="icon-comment tooltip-toggle"></i>{{ error.comments.__len__() }} comments
+			<i class="icon-comment"></i>&nbsp;{{ error.comments.__len__() }} comments
 		{% endif %}
 		{% endblock %}
 	</td>

@@ -59,6 +59,10 @@ Triage.modules.errorList = (function($, app) {
 				changeSelection(this);
 				activateSelection();
 			});
+
+			app.on('pane.tag.remove', function(tag){
+				$('.label-'+tag).fadeOut();
+			});
 		},
 		stop: function() { },
 		currentHash: null

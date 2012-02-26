@@ -111,6 +111,27 @@ Triage.modules.pane = (function($, app) {
 				});
 			});
 
+			$(document).on('click', '.claim-btn', function() {
+				app.trigger('pane.claim');
+			});
+
+			$(document).on('click', '.unclaim-btn', function() {
+				app.trigger('pane.unclaim');
+			});
+
+			$(document).on('click', '.tag-delete', function() {
+				var tag = $(this).data('tag');
+				app.trigger('pane.tag.remove', tag);
+				$(this).parent().fadeOut();
+			});
+
+			$(document).on('submit', '.tag-form', function(e) {
+				e.stopPropagation();
+				e.preventDefault();
+				var tag = $('[name=tag]').val();
+				app.trigger('pane.tag.add', tag);
+			});
+
 		},
 		stop: function() { }
 	};
