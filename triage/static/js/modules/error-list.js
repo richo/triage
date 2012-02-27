@@ -12,18 +12,18 @@ Triage.modules.errorList = (function($, app) {
 		if (selected.is(':first-child'))
 			$('body').scrollTop(0);
 		else if (selected.is(':last-child'))
-			$('body').scrollTop($('body').height());			
+			$('body').scrollTop($('body').height());
 		else {
 			if (selected.offset().top < $('body').scrollTop())
 				$('body').scrollTop(selected.offset().top);
-			
+
 			if (selected.offset().top > $('.pane').offset().top)
 				$('body').scrollTop($('body').scrollTop() + selected.height());
 		}
 
 		currentSelection = selected.data('errorid');
 		app.trigger('errorlist.selection.changed', selected);
-	}
+	};
 
 	var activateSelection = function() {
 		app.trigger('errorlist.selection.activated');
