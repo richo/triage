@@ -60,6 +60,7 @@ def error_page(request):
     search = request.GET.get('search', '')
     show = request.GET.get('show', 'open') # open, resolved, mine
     tags = request.GET.getall('tags')
+    order_by = request.GET.get('order', 'date')
     start = request.GET.get('start', 0)
     end = start + 20
 
@@ -78,6 +79,7 @@ def error_page(request):
         'selected_project': selected_project,
         'available_projects': available_projects,
         'show': show,
+        'order_by': order_by,
         'tags': Tag.objects(),
         'users': User.objects(),
     }

@@ -12,10 +12,10 @@
 
 <ul id="error-tabs" class="nav nav-tabs" data-show="{{show}}">
 	<li class="{{ switch(show=='open') }}" data-name="open">
-		<a href="{{route_url('error_list', project=selected_project.id)}}" data-pjax="#information">Open</a>
+		<a href="{{route_url('error_list', project=selected_project.id)}}">Open</a>
 	</li>
-	<li class="{{ switch(show=='resolved') }}" data-name="resolved"><a href="{{route_url('error_list', project=selected_project.id)}}?show=resolved" data-pjax="#information">Resolved</a></li>
-	<li class="{{ switch(show=='mine') }}" data-name="mine"><a href="{{route_url('error_list', project=selected_project.id)}}?show=mine" data-pjax="#information">Mine</a></li>
+	<li class="{{ switch(show=='resolved') }}" data-name="resolved"><a href="{{route_url('error_list', project=selected_project.id)}}?show=resolved">Resolved</a></li>
+	<li class="{{ switch(show=='mine') }}" data-name="mine"><a href="{{route_url('error_list', project=selected_project.id)}}?show=mine">Mine</a></li>
 </ul>
 {% endblock %}
 
@@ -29,12 +29,12 @@
 
 <div id="information">
 
-	<ul class="nav nav-pills pull-right">
-		<li class="active">
-			<a href="#">Date</a>
+	<ul id="order-items" class="nav nav-pills pull-right" data-orderby="{{order_by}}">
+		<li class="{{ switch(order_by=='date') }}" data-name="date">
+			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}">Date</a>
 		</li>
-		<li><a href="#">Occurances</a></li>
-		<li><a href="#">Activity</a></li>
+		<li class="{{ switch(order_by=='occurances') }}" data-name="occurances"><a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}">Occurances</a></li>
+		<li class="{{ switch(order_by=='activity') }}" data-name="activity"><a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}">Activity</a></li>
 	</ul>
 
 	<table class="error-list table">
