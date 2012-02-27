@@ -6,6 +6,7 @@ from urllib import urlencode
 from webob.multidict import MultiDict
 from datetime import datetime, timedelta
 
+
 # Adds route_url method to the top level of the template context
 @subscriber(BeforeRender)
 def add_route_url(event):

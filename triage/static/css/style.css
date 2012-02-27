@@ -275,6 +275,7 @@ body {
 }
 
 .pane .ui-resizable-handle {
+	top: -2px;
 	height: 5px;
 	cursor: row-resize;
 }
