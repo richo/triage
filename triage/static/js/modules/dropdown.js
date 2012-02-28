@@ -1,3 +1,5 @@
+/*global Triage: true*/
+
 Triage.modules.dropdown = (function($, app) {
 	"use strict";
 

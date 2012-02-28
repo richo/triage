@@ -1,3 +1,5 @@
+/*global Triage: true, jwerty: true*/
+
 Triage.modules.pane = (function($, app) {
 	"use strict";
 
@@ -42,16 +44,18 @@ Triage.modules.pane = (function($, app) {
 
 	var togglePane = function() {
 
-		if ($('body').hasClass('pane-open'))
+		if ($('body').hasClass('pane-open')) {
 			return hidePane();
+		}
 		return showPane();
 	};
 
 	var bindActions = function(self) {
 		var $selector = $(self).parent();
 
-		if ($selector.hasClass('pane-active'))
+		if ($selector.hasClass('pane-active')) {
 			hidePane();
+		}
 		else {
 			showPane();
 			selectTab($selector);
@@ -61,10 +65,10 @@ Triage.modules.pane = (function($, app) {
 	var _moveItem = function(action) {
 		showPane();
 		var current = $('.pane .pane-actions li.pane-active');
-		if (action == 'right' && current.next().length) {			
+		if (action === 'right' && current.next().length) {
 			selectTab(current.next());
 		}
-		else if (action == 'left' && current.prev().length) {
+		else if (action === 'left' && current.prev().length) {
 			selectTab(current.prev());
 		}
 		return false;

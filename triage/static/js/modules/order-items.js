@@ -1,3 +1,5 @@
+/*global Triage: true*/
+
 Triage.modules.orderItems = (function($, app) {
 	"use strict";
 

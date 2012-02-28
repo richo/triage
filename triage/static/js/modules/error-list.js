@@ -1,3 +1,5 @@
+/*global Triage: true, jwerty: true*/
+
 Triage.modules.errorList = (function($, app) {
 	"use strict";
 
@@ -9,16 +11,20 @@ Triage.modules.errorList = (function($, app) {
 		selected.siblings().removeClass('error-active');
 		selected.addClass('error-active');
 
-		if (selected.is(':first-child'))
+		if (selected.is(':first-child')) {
 			$('body').scrollTop(0);
-		else if (selected.is(':last-child'))
+		}
+		else if (selected.is(':last-child')) {
 			$('body').scrollTop($('body').height());
+		}
 		else {
-			if (selected.offset().top < $('body').scrollTop())
+			if (selected.offset().top < $('body').scrollTop()) {
 				$('body').scrollTop(selected.offset().top);
+			}
 
-			if (selected.offset().top > $('.pane').offset().top)
+			if (selected.offset().top > $('.pane').offset().top) {
 				$('body').scrollTop($('body').scrollTop() + selected.height());
+			}
 		}
 
 		currentSelection = selected.data('errorid');
@@ -36,10 +42,10 @@ Triage.modules.errorList = (function($, app) {
 		if (!current.length) {
 			changeSelection($('.error-list tr:first-child'));
 		}
-		else if (action == 'down' && current.next().length) {
+		else if (action === 'down' && current.next().length) {
 			changeSelection(current.next());
 		}
-		else if (action == 'up' && current.prev().length) {
+		else if (action === 'up' && current.prev().length) {
 			changeSelection(current.prev());
 		}
 

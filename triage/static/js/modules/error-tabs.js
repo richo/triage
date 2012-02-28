@@ -1,3 +1,5 @@
+/*global Triage: true*/
+
 Triage.modules.errorTabs = (function($, app) {
 	"use strict";
 
