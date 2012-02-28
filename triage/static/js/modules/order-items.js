@@ -39,8 +39,6 @@ Triage.modules.orderItems = (function($, app) {
 				} else {
 					self.orderBy = $parent.data("name");
 				}
-
-				return false;
 			});
 
 			$(".error-list tbody").on("pjax:end", function(e){
