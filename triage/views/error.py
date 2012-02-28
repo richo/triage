@@ -17,8 +17,8 @@ def get_errors(request):
     search = request.GET.get('search', '')
     show = request.GET.get('show', 'open') # open, resolved, mine
     tags = request.GET.getall('tags')
-    order_by = request.GET.get('order', 'date')
-    direction = request.GET.get('direction', 'asc')
+    order_by = request.GET.get('order_by', 'date')
+    direction = request.GET.get('direction', 'desc')
     start = request.GET.get('start', 0)
     end = start + 20
 
@@ -38,6 +38,17 @@ def get_errors(request):
     if tags:
         errors.filter(tags__in=tags)
  
+    order_map = {
+        'date': 'timelatest',
+        'occurances': 'count',
+        'activity': 'comments'
+    }
+
+    if order_by in order_map:
+        order_by = order_map[order_by]
+    else:
+        order_by = 'timelatest'
+
     if direction == 'desc':
         order_by = '-' + order_by
     
@@ -60,7 +71,8 @@ def error_page(request):
     search = request.GET.get('search', '')
     show = request.GET.get('show', 'open') # open, resolved, mine
     tags = request.GET.getall('tags')
-    order_by = request.GET.get('order', 'date')
+    order_by = request.GET.get('order_by', 'date')
+    direction = request.GET.get('direction', 'desc')    
     start = request.GET.get('start', 0)
     end = start + 20
 
@@ -80,6 +92,7 @@ def error_page(request):
         'available_projects': available_projects,
         'show': show,
         'order_by': order_by,
+        'direction': direction,
         'tags': Tag.objects(),
         'users': User.objects(),
     }

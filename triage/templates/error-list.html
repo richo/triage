@@ -31,10 +31,14 @@
 
 	<ul id="order-items" class="nav nav-pills pull-right" data-orderby="{{order_by}}">
 		<li class="{{ switch(order_by=='date') }}" data-name="date">
-			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}">Date</a>
+			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}&order_by=date">Date <i class="icon-white icon-chevron-up"></i></a>
 		</li>
-		<li class="{{ switch(order_by=='occurances') }}" data-name="occurances"><a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}">Occurances</a></li>
-		<li class="{{ switch(order_by=='activity') }}" data-name="activity"><a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}">Activity</a></li>
+		<li class="{{ switch(order_by=='occurances') }}" data-name="occurances">
+			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}&order_by=occurances">Occurances</a>
+		</li>
+		<li class="{{ switch(order_by=='activity') }}" data-name="activity">
+			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}&order_by=activity">Activity</a>
+		</li>
 	</ul>
 
 	<table class="error-list table">

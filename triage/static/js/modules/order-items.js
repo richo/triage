@@ -29,8 +29,8 @@ Triage.modules.orderItems = (function($, app) {
 		updateActive: function() {
 			this.$container.find("li").removeClass("active");
 
-			if (this.isOrderBy('occurence')) {
-				this.$container.find("[data-name='occurence']").addClass("active");
+			if (this.isOrderBy('occurances')) {
+				this.$container.find("[data-name='occurances']").addClass("active");
 			} else if (this.isOrderBy('activity')) {
 				this.$container.find("[data-name='activity']").addClass("active");
 			} else {
