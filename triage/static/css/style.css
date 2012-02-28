@@ -258,12 +258,12 @@ body {
 /*	Form
 	------------------------------------------------------------ */
 
-.content .login {
+.content .login, .content .register {
 	width: 500px;
 	margin: 0 auto;
 }
 
-.content .login label{
+.content .login label, .content .register label {
 	background-color: #fff;
 }
 
