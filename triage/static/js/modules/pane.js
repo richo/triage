@@ -59,14 +59,12 @@ Triage.modules.pane = (function($, app) {
 	};
 
 	var _moveItem = function(action) {
+		showPane();
 		var current = $('.pane .pane-actions li.pane-active');
-
-		if (action == 'right' && current.next().length) {
-			showPane();
+		if (action == 'right' && current.next().length) {			
 			selectTab(current.next());
 		}
 		else if (action == 'left' && current.prev().length) {
-			showPane();
 			selectTab(current.prev());
 		}
 		return false;
