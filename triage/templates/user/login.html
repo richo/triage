@@ -1,11 +1,13 @@
 {% extends "layout/fluid.html" %}
 
 {% block content %}
+	<div class="login">
+		<h1>User Login</h1>
 
-	<h1>User Login</h1>
+		{% if form %}
+			{{ form }}
+		{% endif %}
+	</div>
 
-	{% if form %}
-		{{ form }}
-	{% endif %}
 
 {% endblock %}
