@@ -30,14 +30,14 @@
 <div id="information">
 
 	<ul id="order-items" class="nav nav-pills pull-right" data-orderby="{{order_by}}">
-		<li class="{{ switch(order_by=='date') }}" data-name="date">
-			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}&order_by=date">Date <i class="icon-white icon-chevron-up"></i></a>
+		<li class="{{ switch(order_by=='date') }} {{direction}}" data-name="date">
+			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}&order_by=date&direction={{direction}}">Date <i class="icon-white"></i></a>
 		</li>
-		<li class="{{ switch(order_by=='occurances') }}" data-name="occurances">
-			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}&order_by=occurances">Occurances</a>
+		<li class="{{ switch(order_by=='occurances') }} {{direction}}" data-name="occurances">
+			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}&order_by=occurances&direction={{direction}}">Occurances <i class="icon-white"></i></a>
 		</li>
-		<li class="{{ switch(order_by=='activity') }}" data-name="activity">
-			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}&order_by=activity">Activity</a>
+		<li class="{{ switch(order_by=='activity') }} {{direction}}" data-name="activity">
+			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}&order_by=activity&direction={{direction}}">Activity <i class="icon-white"></i></a>
 		</li>
 	</ul>
 

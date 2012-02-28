@@ -21,7 +21,26 @@ Triage.modules.orderItems = (function($, app) {
 			});
 
 			$list.on("click", function() {
-				self.orderBy = $(this).parent().data("name");
+				var $parent = $(this).parent();
+
+				if ($parent.hasClass('active')) {
+					var href;
+					if ($parent.hasClass('desc')) {
+						href = $(this).attr("href").replace(/(.*)direction=(.*)/i, "$1direction=asc");
+						$(this).attr('href', href);
+						$parent.removeClass('desc');
+						$parent.addClass('asc');
+					} else {
+						href = $(this).attr("href").replace(/(.*)direction=(.*)/i, "$1direction=desc");
+						$(this).attr('href', href);
+						$parent.removeClass('asc');
+						$parent.addClass('desc');
+					}
+				} else {
+					self.orderBy = $parent.data("name");
+				}
+
+				return false;
 			});
 
 			$(".error-list tbody").on("pjax:end", function(e){

@@ -403,3 +403,14 @@ body {
 	height:40px;
 	width:40px;
 }
+
+/*	Order items
+	------------------------------------------------------------ */
+
+#order-items .desc i{
+	background-position:-313px -119px;
+}
+
+#order-items .asc i{
+	background-position:-288px -120px;
+}
