@@ -10,7 +10,6 @@ from time import time
 
 
 def get_errors(request):
-    available_projects = request.registry.settings['projects']
     selected_project = get_selected_project(request)
 
     search = request.GET.get('search', '')
@@ -68,7 +67,7 @@ def error_page(request):
     selected_project = get_selected_project(request)
 
     search = request.GET.get('search', '')
-    show = request.GET.get('show', 'open') # open, resolved, mine
+    show = request.GET.get('show', 'open')  # open, resolved, mine
     tags = request.GET.getall('tags')
     order_by = request.GET.get('order_by', 'date')
     direction = request.GET.get('direction', 'desc')
@@ -94,7 +93,6 @@ def error_page(request):
         'tags': Tag.objects(),
         'users': User.objects(),
     }
-
 
 
 @view_config(route_name='error_view', permission='authenticated')

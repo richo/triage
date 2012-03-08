@@ -214,6 +214,7 @@ body {
 
 #information td.date {
 	text-align: right;
+	white-space: nowrap;
 }
 
 #information .count {

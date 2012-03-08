@@ -6,7 +6,7 @@
 		<span class="count">{{ error.count|int }}</span>
 		{% endblock %}
 	</td>
-	<td>
+	<td class="error">
 		{% block middle_cell %}
 		<div class="error">
 			{% if error.message %}
@@ -25,7 +25,7 @@
 		</div>
 		{% endblock %}
 	</td>
-	<td data-original-title="First seen: {{ date(error.timefirst) }}" class="date vmiddle tooltip-toggle">
+	<td class="date vmiddle tooltip-toggle" data-original-title="First seen: {{ date(error.timefirst) }}">
 		{% block right_cell %}
 		Last occured {{ date(error.timelatest) }}<br/>
 		{% if error.claimedby %}
