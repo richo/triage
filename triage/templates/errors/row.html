@@ -28,8 +28,10 @@
 	<td class="date vmiddle tooltip-toggle" data-original-title="First seen: {{ date(error.timefirst) }}">
 		{% block right_cell %}
 		Last occured {{ date(error.timelatest) }}<br/>
-		{% if error.claimedby %}
-			<i class="icon-star"></i>&nbsp;{{ error.claimedby.name }}
+		{% if error.claimedby and error.claimedby == user %}
+			<span class="claimed-by"><i class="icon-star"></i>&nbsp;You</span>
+		{% elif error.claimedby %}
+			<span class="claimed-by"><i class="icon-star"></i>&nbsp;{{ error.claimedby.name }}</span>
 		{% endif %}
 		{% if error.comments %}
 			<i class="icon-comment"></i>&nbsp;{{ error.comments.__len__() }} comments
