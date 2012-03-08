@@ -2,7 +2,22 @@
 	<h3>{{error.message}}</h3>
 	<h4>{{error.type}}</h4>
 	<div class="summary">
-
+		<dl>
+			{% if instance.file %}
+				<dt>File</dt>
+				<dd>{{ instance.file }}</dd>
+			{% endif %}
+			{% if instance.line %}
+				<dt>Line number</dt>
+				<dd>{{ instance.line }}</dd>
+			{% endif %}
+			<dt>First occurance</dt>
+			<dd>{{ date(error.timefirst, '%d %b %y, %I:%M%p', '%d %b %y, %I:%M%p') }}</dd>
+			<dt>Latest occurance</dt>
+			<dd>{{ date(error.timelatest, '%d %b %y, %I:%M%p', '%d %b %y, %I:%M%p') }}</dd>
+			<dt>Number of occurances</dt>
+			<dd>{{ error.count }}</dd>
+		</dl>
 	</div>
 	<div class="summary-tags well">
 		{% if error.claimedby %}
@@ -84,7 +99,7 @@
 	<dl class="related-errors">
 		{% for e in other_errors[:10] %}
 			<dt><a href="{{ route_url('error_view', project=selected_project.id, id=e._id) }}">{{e.message}}</a></dt>
-			<dd data-timeago="{{ e.timestamp }}"></dd>
+			<dd>{{ date(e.timecreated) }}</dd>
 		{% endfor %}
 	</dl>
 </div>
