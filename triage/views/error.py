@@ -1,7 +1,6 @@
 from pyramid.view import view_config
 from pyramid.renderers import render_to_response
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
-from jinja2 import Markup
 
 from triage.util import Paginator
 from triage.models import Error, Comment, Tag, User
@@ -15,7 +14,7 @@ def get_errors(request):
     selected_project = get_selected_project(request)
 
     search = request.GET.get('search', '')
-    show = request.GET.get('show', 'open') # open, resolved, mine
+    show = request.GET.get('show', 'open')  # open, resolved, mine
     tags = request.GET.getall('tags')
     order_by = request.GET.get('order_by', 'date')
     direction = request.GET.get('direction', 'desc')
@@ -37,7 +36,7 @@ def get_errors(request):
 
     if tags:
         errors.filter(tags__in=tags)
- 
+
     order_map = {
         'date': 'timelatest',
         'occurances': 'count',
@@ -51,9 +50,9 @@ def get_errors(request):
 
     if direction == 'desc':
         order_by = '-' + order_by
-    
+
     return errors.order_by(order_by)[start:end]
-    
+
 
 @view_config(route_name='error_list', permission='authenticated', xhr=True, renderer='errors/list.html')
 def error_list(request):
@@ -72,7 +71,7 @@ def error_page(request):
     show = request.GET.get('show', 'open') # open, resolved, mine
     tags = request.GET.getall('tags')
     order_by = request.GET.get('order_by', 'date')
-    direction = request.GET.get('direction', 'desc')    
+    direction = request.GET.get('direction', 'desc')
     start = request.GET.get('start', 0)
     end = start + 20
 
