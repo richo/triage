@@ -86,12 +86,12 @@ Triage.modules.errorList = (function($, app) {
 
 			app.on('pane.tag.add', function(tag) {
 				$('<span class="label label-' + tag + '">' + tag + '</span>').appendTo(
-					$('.error-list tr.error-active .error .detail')
+					$('.error-list tr.error-active .error .detail-tags')
 				);
 			});
 
 			app.on('pane.tag.remove', function(tag) {
-				$('.error-list tr.error-active .error .detail .label-' + tag).fadeOut(function () { $(this).remove(); });
+				$('.error-list tr.error-active .error .detail-tags .label-' + tag).fadeOut(function () { $(this).remove(); });
 			});
 		},
 		stop: function() { },

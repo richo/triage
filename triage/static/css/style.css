@@ -335,6 +335,7 @@ body {
 .label {
 	padding: 3px 5px 3px 5px;
 	text-transform: none;
+	margin-right: 3px;
 }
 
 /*	Pane
