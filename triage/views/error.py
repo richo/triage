@@ -100,29 +100,6 @@ def view(request):
     except:
         return HTTPNotFound()
 
-    comment_schema = CommentsSchema()
-    comment_form = Form(comment_schema, buttons=('submit',), formid="comment_form")
-
-    if 'submit' in request.POST:
-        form_id = request.POST['__formid__']
-        controls = request.POST.items()
-
-        if form_id == 'comment_form':
-            try:
-                values = comment_form.validate(controls)
-
-                error.comments.append(Comment(
-                    author=request.user,
-                    content=values['comment'],
-                    created=int(time())
-                ))
-                error.save()
-
-                url = request.route_url('error_view', project=selected_project['id'], id=error_id)
-                return HTTPFound(location=url)
-            except ValidationFailure, e:
-                comment_form = e
-
     if request.user not in error.seenby:
         error.seenby.append(request.user)
         error.save()
@@ -133,7 +110,7 @@ def view(request):
         'other_errors': error.instances,
         'selected_project': selected_project,
         'available_projects': available_projects,
-        'comment_form': comment_form
+        'comment_form': Form(CommentsSchema(), buttons=('submit',), formid="comment_form")
     }
 
     try:
@@ -215,6 +192,26 @@ def tag_remove(request):
         Tag.removeOne(tag)
         return {'type': 'success'}
     except:
+        return {'type': 'failure'}
+
+
+@view_config(route_name='error_comment_add', permission='authenticated', xhr=True, renderer='json')
+def comment_add(request):
+    error_id = request.matchdict['id']
+    selected_project = get_selected_project(request)
+
+    try:
+        error = Error.objects(project=selected_project['id']).with_id(error_id)
+        error.comments.append(Comment(
+            author=request.user,
+            content=request.POST.get('comment').strip(),
+            created=int(time())
+        ))
+        error.save()
+
+        return {'type': 'success'}
+
+    except ValidationFailure:
         return {'type': 'failure'}
 
 

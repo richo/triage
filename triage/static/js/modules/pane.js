@@ -182,6 +182,20 @@ Triage.modules.pane = (function($, app) {
 				});
 			});
 
+			$(document).on('submit', '.comment-form', function(e) {
+				e.preventDefault();
+				var form = $(this);
+				var field = form.find('textarea');
+				var data = form.serialize();
+				if (field.attr('disabled')) return;
+
+				field.attr('disabled', true);
+				$.post(form.attr('action'), data, function(data) {
+					if (data.type == 'success')
+						loadError();
+				});
+			});
+
 		},
 		stop: function() { }
 	};
