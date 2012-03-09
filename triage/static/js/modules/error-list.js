@@ -66,8 +66,12 @@ Triage.modules.errorList = (function($, app) {
 				activateSelection();
 			});
 
-			app.on('pane.tag.remove', function(tag){
+			app.on('pane.tag.remove', function(tag) {
 				$('.label-'+tag).fadeOut();
+			});
+
+			app.on('error.viewed', function(errorId) {
+				$('#error-'+errorId).removeClass('unseen').addClass('seen');
 			});
 		},
 		stop: function() { },

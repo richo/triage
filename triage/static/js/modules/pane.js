@@ -3,12 +3,15 @@
 Triage.modules.pane = (function($, app) {
 	"use strict";
 
+	var errorId;
+
 	var updateTabPane = function() {
 		var tab = $('.pane-active');
 		if (tab.length) {
 			var active = $('.pane-'+tab.data('view'));
 			active.siblings().hide();
 			active.show();
+			app.trigger('error.viewed', errorId);
 		}
 	};
 
@@ -108,6 +111,7 @@ Triage.modules.pane = (function($, app) {
 			});
 
 			app.on('errorlist.selection.changed', function(selection) {
+				errorId = selection.data('errorid');
 				$('.pane .pane-inner').load(selection.data('url'), function(){
 					updateTabPane();
 				});
