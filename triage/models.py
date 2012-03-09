@@ -56,6 +56,15 @@ class Tag(Document):
         return tag
 
     @classmethod
+    def removeOne(cls, value):
+        try:
+            tag = cls.objects.get(tag=value)
+            tag.count = tag.count - 1
+            tag.save()
+        except DoesNotExist:
+            pass
+
+    @classmethod
     def create_from_tag(cls, value):
         tag = cls()
         tag.tag = value

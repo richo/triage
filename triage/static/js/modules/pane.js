@@ -129,24 +129,38 @@ Triage.modules.pane = (function($, app) {
 				if (button.hasClass('disabled')) return;
 
 				button.addClass('disabled');
-				$.post(button.attr('href'), function() {
-					var trigger = button.hasClass('claim-btn') ? 'pane.claim' : 'pane.unclaim';
+				$.post(button.attr('href'), function(data) {
+					var trigger = button.hasClass('claim-btn') && data.type == 'success' ? 'pane.claim': 'pane.unclaim';
 					app.trigger(trigger);
 					loadError();
 				});
 			});
 
-			$(document).on('click', '.tag-delete', function() {
-				var tag = $(this).data('tag');
-				app.trigger('pane.tag.remove', tag);
-				$(this).parent().fadeOut();
+			$(document).on('submit', '.tag-form', function(e) {
+				e.preventDefault();
+				var form = $(this);
+				var field = form.find('.tag-field');
+				if (field.attr('disabled')) return;
+
+				field.attr('disabled', true);
+				$.post(form.attr('action') + field.val(), function(data) {
+					if (data.type == 'success')
+						app.trigger('pane.tag.add', field.val());
+					loadError();
+				});
 			});
 
-			$(document).on('submit', '.tag-form', function(e) {
-				e.stopPropagation();
+			$(document).on('click', '.tag-delete', function(e) {
 				e.preventDefault();
-				var tag = $('[name=tag]').val();
-				app.trigger('pane.tag.add', tag);
+				var anchor = $(this);
+				if (anchor.attr('disabled')) return;
+
+				anchor.attr('disabled', true);
+				$.post(anchor.attr('href') + anchor.data('tag'), function(data) {
+					if (data.type == 'success')
+						app.trigger('pane.tag.remove', anchor.data('tag'));
+					loadError();
+				});
 			});
 
 		},

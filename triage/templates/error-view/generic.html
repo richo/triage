@@ -33,19 +33,18 @@
 		{% if error.tags %}
 			<ul class="tag-list">
 			{% for tag in error.tags %}
-				<li><span class="label">{{tag}}
-					<i class="icon-remove icon-white tag-delete" data-tag="{{tag}}" title="Remove"></i>
-				</span></li>
+				<li>
+					<span class="label">
+						{{tag}}
+						<a href="{{ route_url('error_tag_remove', project=selected_project.id, id=error._id, tag='') }}" class="icon-remove icon-white tag-delete" data-tag="{{ tag }}"></a>
+					</span>
+				</li>
 			{% endfor %}
 			</ul>
 		{% endif %}
-		{% if user and tag_form %}
-			<form method="post" class="tag-form">
-			{% for f in tag_form %}
-				{{ f.render()|safe }}
-			{% endfor %}
-			</form>
-		{% endif %}
+		<form class="tag-form" method="POST" action="{{ route_url('error_tag_add', project=selected_project.id, id=error._id, tag='') }}">
+			<input class="input-small tag-field" type="text" name="tag" placeholder="Enter tag you would like">
+		</form>
 	</div>
 </div>
 <div class="pane-view pane-backtrace">

@@ -4,7 +4,7 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
 from triage.util import Paginator
 from triage.models import Error, Comment, Tag, User
-from triage.forms import CommentsSchema, TagSchema
+from triage.forms import CommentsSchema
 from deform import Form, ValidationFailure
 from time import time
 
@@ -109,9 +109,6 @@ def view(request):
     comment_schema = CommentsSchema()
     comment_form = Form(comment_schema, buttons=('submit',), formid="comment_form")
 
-    tag_schema = TagSchema()
-    tag_form = Form(tag_schema, buttons=('submit',), formid="tag_form")
-
     if 'submit' in request.POST:
         form_id = request.POST['__formid__']
         controls = request.POST.items()
@@ -131,27 +128,6 @@ def view(request):
                 return HTTPFound(location=url)
             except ValidationFailure, e:
                 comment_form_render = e.render()
-        elif form_id == 'tag_form':
-            try:
-                values = tag_form.validate(controls)
-
-                # build a list of comma seperated, non empty tags
-                tags = [t.strip() for t in values['tag'].split(',') if t.strip() != '']
-
-                changed = False
-                for tag in tags:
-                    if tag not in error.tags:
-                        error.tags.append(tag)
-                        changed = True
-                        Tag.create(tag).save()
-
-                if changed:
-                    error.save()
-
-                url = request.route_url('error_view', project=selected_project['id'], id=error_id)
-                return HTTPFound(location=url)
-            except ValidationFailure, e:
-                tag_form_render = e.render()
 
     if request.user not in error.seenby:
         error.seenby.append(request.user)
@@ -163,8 +139,7 @@ def view(request):
         'other_errors': error.instances,
         'selected_project': selected_project,
         'available_projects': available_projects,
-        'comment_form': comment_form,
-        'tag_form': tag_form,
+        'comment_form': comment_form
     }
 
     try:
@@ -182,9 +157,50 @@ def toggle_claim(request):
 
     try:
         error = Error.objects(project=selected_project['id']).with_id(error_id)
+        if error.claimedby and error.claimedby != request.user:
+            return {'type': 'failure'}
+
         error.claimedby = None if error.claimedby else request.user
         error.save()
 
+        return {'type': 'success'}
+    except:
+        return {'type': 'failure'}
+
+
+@view_config(route_name='error_tag_add', permission='authenticated', renderer='json')
+def tag_add(request):
+    tag = request.matchdict['tag']
+    error_id = request.matchdict['id']
+    selected_project = get_selected_project(request)
+
+    try:
+        error = Error.objects(project=selected_project['id']).with_id(error_id)
+        if tag in error.tags:
+            return {'type': 'failure'}
+
+        error.tags.append(tag)
+        error.save()
+        Tag.create(tag).save()
+        return {'type': 'success'}
+    except:
+        return {'type': 'failure'}
+
+
+@view_config(route_name='error_tag_remove', permission='authenticated', renderer='json')
+def tag_remove(request):
+    tag = request.matchdict['tag']
+    error_id = request.matchdict['id']
+    selected_project = get_selected_project(request)
+
+    try:
+        error = Error.objects(project=selected_project['id']).with_id(error_id)
+        if tag not in error.tags:
+            return {'type': 'failure'}
+
+        error.tags.remove(tag)
+        error.save()
+        Tag.removeOne(tag)
         return {'type': 'success'}
     except:
         return {'type': 'failure'}
