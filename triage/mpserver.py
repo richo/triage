@@ -20,7 +20,6 @@ mongoengine.connect(settings['mongodb.db_name'], host=settings['mongodb.host'])
 
 class LoggingServer:
     def error(self, msg):
-        logging.info(msg)
         try:
             error = Error.create_from_msg(msg)
             error.save()

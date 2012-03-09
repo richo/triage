@@ -70,7 +70,7 @@ class Comment(EmbeddedDocument):
     created = IntField(required=True)
 
 
-class ErrorInstance(EmbeddedDocument):
+class ErrorInstance(Document):
     project = StringField(required=True)
     language = StringField(required=True)
     type = StringField(required=True)
@@ -135,13 +135,14 @@ class Error(Document):
     claimedby = ReferenceField(User)
     tags = ListField(StringField(max_length=30))
     comments = ListField(EmbeddedDocumentField(Comment))
-    instances = ListField(EmbeddedDocumentField(ErrorInstance))
+    instances = ListField(ReferenceField(ErrorInstance))
     seenby = ListField(ReferenceField(User))
     hiddenby = ReferenceField(User)
 
     @classmethod
     def create_from_msg(cls, msg):
         new = ErrorInstance.from_raw(msg)
+        new.save()
         try:
             error = cls.objects.get(hash=new.get_hash())
             error.update_from_instance(new)
@@ -160,7 +161,7 @@ class Error(Document):
         error.timefirst = instance.timecreated
         error.message = instance.message
         error.count = 1
-        error.instances = [instance]
+        error.instances.append(instance)
         return error
 
     def update_from_instance(self, new):
