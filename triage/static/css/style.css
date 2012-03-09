@@ -24,6 +24,7 @@
 body {
 	background-color: #EEEEEE;
 	padding: 20px 60px;
+	overflow-y: scroll;
 }
 
 .vmiddle, td.vmiddle {
