@@ -17,9 +17,7 @@
 		</div>
 		<div class="detail">
 			<span class="detail-type">{{ error.type }}</span>
-			{% if error.tags %}
-				<span class="detail-tags">{% for tag in error.tags %}<span class="label label-{{ tag }}">{{ tag }}</span>{% endfor %}</span>
-			{% endif %}
+			<span class="detail-tags">{% for tag in error.tags %}<span class="label label-{{ tag }}">{{ tag }}</span>{% endfor %}</span>
 		</div>
 		{% endblock %}
 	</td>
