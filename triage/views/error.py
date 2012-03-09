@@ -127,7 +127,7 @@ def view(request):
                 url = request.route_url('error_view', project=selected_project['id'], id=error_id)
                 return HTTPFound(location=url)
             except ValidationFailure, e:
-                comment_form_render = e.render()
+                comment_form = e
 
     if request.user not in error.seenby:
         error.seenby.append(request.user)
@@ -150,7 +150,7 @@ def view(request):
         return render_to_response(template, params)
 
 
-@view_config(route_name='error_toggle_claim', permission='authenticated', renderer='json')
+@view_config(route_name='error_toggle_claim', permission='authenticated', xhr=True, renderer='json')
 def toggle_claim(request):
     error_id = request.matchdict['id']
     selected_project = get_selected_project(request)
@@ -168,7 +168,7 @@ def toggle_claim(request):
         return {'type': 'failure'}
 
 
-@view_config(route_name='error_tag_add', permission='authenticated', renderer='json')
+@view_config(route_name='error_tag_add', permission='authenticated', xhr=True, renderer='json')
 def tag_add(request):
     tag = request.matchdict['tag']
     error_id = request.matchdict['id']
@@ -187,7 +187,7 @@ def tag_add(request):
         return {'type': 'failure'}
 
 
-@view_config(route_name='error_tag_remove', permission='authenticated', renderer='json')
+@view_config(route_name='error_tag_remove', permission='authenticated', xhr=True, renderer='json')
 def tag_remove(request):
     tag = request.matchdict['tag']
     error_id = request.matchdict['id']
