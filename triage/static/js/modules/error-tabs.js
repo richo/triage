@@ -3,17 +3,33 @@
 Triage.modules.errorTabs = (function($, app) {
 	"use strict";
 
+	var container;
+	var show;
+
+	var isShow = function(tab) {
+		return show.search(tab) > -1;
+	};
+
+	var updateActive = function() {
+		container.find("li").removeClass("active");
+
+		if (isShow('resolved')) {
+			container.find("[data-name='resolved']").addClass("active");
+		} else if (isShow('mine')) {
+			container.find("[data-name='mine']").addClass("active");
+		} else {
+			container.find("[data-name='open']").addClass("active");
+		}
+	};
+
 	return {
-		$container: null,
-		show: null,
 		start: function() {
-			var self = this;
 
-			this.$container = $("#error-tabs");
+			container = $("#error-tabs");
 
-			this.show = this.$container.data("show").toString();
+			show = container.data("show").toString();
 
-			var $list = this.$container.find("a");
+			var $list = container.find("a");
 
 			$list.pjax(".error-list tbody", {
 				replace: false,
@@ -22,30 +38,16 @@ Triage.modules.errorTabs = (function($, app) {
 			});
 
 			$list.on("click", function() {
-				self.show = $(this).parent().data("name");
+				show = $(this).parent().data("name");
 			});
 
 			$(".error-list tbody").on("pjax:end", function(e){
-				self.updateActive();
+				updateActive();
 			});
-		},
-		updateActive: function() {
-			this.$container.find("li").removeClass("active");
-
-			if (this.isShow('resolved')) {
-				this.$container.find("[data-name='resolved']").addClass("active");
-			} else if (this.isShow('mine')) {
-				this.$container.find("[data-name='mine']").addClass("active");
-			} else {
-				this.$container.find("[data-name='open']").addClass("active");
-			}
 		},
 		stop: function() {
 
 		},
-		isShow: function(tab) {
-			return this.show.search(tab) > -1;
-		}
 	};
 });
 
