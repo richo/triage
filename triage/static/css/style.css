@@ -363,7 +363,12 @@ body {
 .pane .pane-container {
 	display: none;
 	height: 250px;
-	overflow-y: scroll;
+	overflow-y: none;
+}
+
+.pane .pane-inner {
+	height: 98%;
+	overflow: auto;
 }
 
 .pane.pane-open .pane-container {
@@ -373,6 +378,34 @@ body {
 .pane .pane-view {
 	display: none;
 	height: 100%;
+}
+
+.pane .pane-view  h3 {
+	margin-bottom: 10px;
+}
+
+.pane .pane-view  h4 {
+	color: #f00;
+	margin-bottom: 5px;
+}
+
+.pane .pane-container .summary {
+	float: left;
+	min-width: 980px;
+}
+
+.pane .pane-container .summary ul{
+	list-style-type: none;
+	margin: 0;
+}
+
+.pane .pane-container .summary .title {
+	font-weight: bold;
+}
+
+.pane .pane-backtrace .method {
+	width: 200px;
+	padding-right: 20px;
 }
 
 .pane .pane-actions {
@@ -386,9 +419,7 @@ body {
 }
 
 .summary-tags {
-	position: absolute;
-	right:30px;
-	top:30px;
+	display: inline-block;
 	width: 150px;
 }
 

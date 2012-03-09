@@ -2,22 +2,32 @@
 	<h3>{{error.message}}</h3>
 	<h4>{{error.type}}</h4>
 	<div class="summary">
-		<dl>
+		<ul>
 			{% if instance.file %}
-				<dt>File</dt>
-				<dd>{{ instance.file }}</dd>
+				<li>
+				<span class="title">File</span>
+				{{ instance.file }}
+				</li>
 			{% endif %}
 			{% if instance.line %}
-				<dt>Line number</dt>
-				<dd>{{ instance.line }}</dd>
+				<li>
+				<span class="title">Line number</span>
+				{{ instance.line }}
+				</li>
 			{% endif %}
-			<dt>First occurance</dt>
-			<dd>{{ date(error.timefirst, '%d %b %y, %I:%M%p', '%d %b %y, %I:%M%p') }}</dd>
-			<dt>Latest occurance</dt>
-			<dd>{{ date(error.timelatest, '%d %b %y, %I:%M%p', '%d %b %y, %I:%M%p') }}</dd>
-			<dt>Number of occurances</dt>
-			<dd>{{ error.count }}</dd>
-		</dl>
+			<li>
+				<span class="title">First occurance</span>
+				{{ date(error.timefirst, '%d %b %y, %I:%M%p', '%d %b %y, %I:%M%p') }}
+			</li>
+			<li>
+				<span class="title">Latest occurance</span>
+				{{ date(error.timelatest, '%d %b %y, %I:%M%p', '%d %b %y, %I:%M%p') }}
+			</li>
+			<li>
+				<span class="title">Number of occurances</span>
+				{{ error.count }}
+			</li>
+		</ul>
 	</div>
 	<div class="summary-tags well">
 
@@ -68,7 +78,7 @@
 		<tbody>
 			{% for row in instance.backtrace %}
 				<tr>
-					<td>
+					<td class="method">
 						{% if row.class %}{{ row.class }}::{% endif %}{% if row.function %}{{ row.function }}{% endif %}
 					</td>
 					<td>
@@ -103,12 +113,11 @@
 
 <div class="pane-view pane-similar">
 	<h3>Similar Errors</h3>
-	<dl class="related-errors">
+	<ul class="related-errors">
 		{% for e in other_errors[:10] %}
-			<dt><a href="{{ route_url('error_view', project=selected_project.id, id=e._id) }}">{{e.message}}</a></dt>
-			<dd>{{ date(e.timecreated) }}</dd>
+			<li>{{ date(e.timecreated) }} <a href="{{ route_url('error_view', project=selected_project.id, id=e._id) }}">{{e.message}}</a></li>
 		{% endfor %}
-	</dl>
+	</ul>
 </div>
 
 
