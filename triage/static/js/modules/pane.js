@@ -87,7 +87,13 @@ Triage.modules.pane = (function($, app) {
 	var bindHotKeys = function(self) {
 		jwerty.key('←', function (e) { e.stopPropagation(); return _moveItem('left'); });
 		jwerty.key('→', function (e) { e.stopPropagation(); return _moveItem('right'); });
-		jwerty.key('space', function(e) { e.stopPropagation(); togglePane(); return false; });
+		jwerty.key('space', function(e) {
+			if (!$('input[type=text]:focus, textarea:focus').length) {
+				e.stopPropagation();
+				togglePane();
+				return false;
+			}
+		});
 	};
 
 	return {
