@@ -205,8 +205,8 @@ var pjax = $.pjax = function( options ) {
 
     var event = $.Event('pjax:error')
     this.trigger(event, [xhr, textStatus, errorThrown, options])
-    if (textStatus !== 'abort' && event.result !== false)
-      window.location = url
+    // if (textStatus !== 'abort' && event.result !== false)
+    //   window.location = url
   }
 
   options.success = function(data, status, xhr) {

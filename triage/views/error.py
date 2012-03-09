@@ -17,7 +17,7 @@ def get_errors(request):
     tags = request.GET.getall('tags')
     order_by = request.GET.get('order_by', 'date')
     direction = request.GET.get('direction', 'desc')
-    start = request.GET.get('start', 0)
+    start = int(request.GET.get('start', 0))
     end = start + 20
 
     if show not in ['open', 'resolved', 'mine']:

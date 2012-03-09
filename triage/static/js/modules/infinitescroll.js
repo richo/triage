@@ -5,9 +5,9 @@ Triage.modules.infiniteScroll = (function($, app) {
 		start: function() {
 
 			$(window).scroll(function(){
-			        if  ($(window).scrollTop() == $(document).height() - $(window).height()){
-			           console.log('here');
-			        }
+					if  ($(window).scrollTop() == $(document).height() - $(window).height()){
+						console.log('here');
+					}
 			});
 		},
 		stop: function() {
