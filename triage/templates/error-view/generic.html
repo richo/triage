@@ -1,7 +1,8 @@
 <div class="pane-view pane-summary">
-	<h3>{{error.message}}</h3>
-	<h4>{{error.type}}</h4>
 	<div class="summary">
+		<h3>{{error.message}}</h3>
+		<h4>{{error.type}}</h4>
+
 		<ul>
 			{% if instance.file %}
 				<li>
@@ -29,7 +30,7 @@
 			</li>
 		</ul>
 	</div>
-	<div class="summary-tags well">
+	<div class="summary-tags">
 
 		{% if error.claimedby %}
 			{% if user == error.claimedby %}
@@ -47,22 +48,24 @@
 			<a href="{{ route_url('error_toggle_resolve', project=selected_project.id, id=error._id) }}" class="btn btn-success btn-resolve">Resolve</a>
 		{% endif %}
 
-		<h5>Tags</h5>
-		{% if error.tags %}
-			<ul class="tag-list">
-			{% for tag in error.tags %}
-				<li>
-					<span class="label">
-						{{tag}}
-						<a href="{{ route_url('error_tag_remove', project=selected_project.id, id=error._id, tag='') }}" class="icon-remove icon-white tag-delete" data-tag="{{ tag }}"></a>
-					</span>
-				</li>
-			{% endfor %}
-			</ul>
-		{% endif %}
-		<form class="tag-form" method="POST" action="{{ route_url('error_tag_add', project=selected_project.id, id=error._id, tag='') }}">
-			<input class="input-small tag-field" type="text" name="tag" placeholder="Enter tag you would like">
-		</form>
+		<div class="tags-container well">
+			<h5>Tags</h5>
+			{% if error.tags %}
+				<ul class="tag-list">
+				{% for tag in error.tags %}
+					<li>
+						<span class="label">
+							{{tag}}
+							<a href="{{ route_url('error_tag_remove', project=selected_project.id, id=error._id, tag='') }}" class="icon-remove icon-white tag-delete" data-tag="{{ tag }}"></a>
+						</span>
+					</li>
+				{% endfor %}
+				</ul>
+			{% endif %}
+			<form class="tag-form" method="POST" action="{{ route_url('error_tag_add', project=selected_project.id, id=error._id, tag='') }}">
+				<input class="input-medium tag-field" type="text" name="tag" placeholder="Enter tag you would like">
+			</form>
+		</div>
 	</div>
 </div>
 <div class="pane-view pane-backtrace">

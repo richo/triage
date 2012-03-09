@@ -392,7 +392,7 @@ body {
 
 .pane .pane-container .summary {
 	float: left;
-	min-width: 980px;
+	min-width: auto;
 }
 
 .pane .pane-container .summary ul{
@@ -420,13 +420,26 @@ body {
 }
 
 .summary-tags {
-	display: inline-block;
-	width: 150px;
+	display: block;
+	width: 200px;
+	float: right;
+}
+
+.summary-tags .tag-form {
+	margin-bottom: 0;
+}
+
+.tags-container {
+	margin-top: 10px;
+}
+
+.tags-container h5 {
+	padding-bottom: 4px;
 }
 
 .tag-list {
 	list-style-type: none;
-	margin:0 0 4px 0;
+	margin:0 0 10px 0;
 }
 
 .tag-list li {
