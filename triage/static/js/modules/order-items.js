@@ -18,20 +18,23 @@ Triage.modules.orderItems = (function($, app) {
 			$list.pjax(".error-list tbody", {
 				replace: false,
 				allowEmptyData: true,
-				timeout: 10000,
+				timeout: 2000,
 			});
 
 			$list.on("click", function() {
-				var $parent = $(this).parent();
-
+				var
+					$parent = $(this).parent(),
+					$button = $(this);
 				if ($parent.hasClass('active')) {
-					var $button = $(this);
+
+
 					if ($parent.hasClass('desc')) {
-						this.setAsc($parent, $button);
+						self.setAsc($parent, $button);
 					} else {
-						this.setDesc($parent, $button);
+						self.setDesc($parent, $button);
 					}
 				} else {
+					self.setDesc($parent, $button);
 					self.orderBy = $parent.data("name");
 				}
 			});
@@ -60,8 +63,9 @@ Triage.modules.orderItems = (function($, app) {
 		setDesc: function($parent, $button) {
 			var href = $button.attr("href").replace(/(.*)direction=(.*)/i, "$1direction=desc");
 			$button.attr('href', href);
-			$button.removeClass('asc');
-			$button.addClass('desc');
+
+			$parent.removeClass('asc');
+			$parent.addClass('desc');
 		},
 		setAsc: function($parent, $button) {
 			var href = $button.attr("href").replace(/(.*)direction=(.*)/i, "$1direction=asc");
