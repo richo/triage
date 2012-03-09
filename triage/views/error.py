@@ -76,12 +76,9 @@ def error_page(request):
 
     errors = get_errors(request)
 
-    page = request.params.get('page', '1')
-    paginator = Paginator(errors, size_per_page=20, current_page=page)
     return {
         'search': search,
-        'errors': paginator.get_current_page(),
-        'paginator': paginator,
+        'errors': errors,
         'selected_project': selected_project,
         'available_projects': available_projects,
         'show': show,
