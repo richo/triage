@@ -7,7 +7,6 @@ from deform import Form, ValidationFailure
 from pyramid.security import remember, forget
 from pyramid.security import authenticated_userid
 from triage.models import User
-from time import time
 from mongoengine.queryset import DoesNotExist
 
 
