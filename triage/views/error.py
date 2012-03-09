@@ -2,10 +2,7 @@ from pyramid.view import view_config
 from pyramid.renderers import render_to_response
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
-from triage.util import Paginator
 from triage.models import Error, Comment, Tag, User
-from triage.forms import CommentsSchema
-from deform import Form, ValidationFailure
 from time import time
 
 

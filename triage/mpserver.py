@@ -23,8 +23,8 @@ class LoggingServer:
         try:
             error = Error.create_from_msg(msg)
             error.save()
-        except Exception, a:
-            logging.exception('Failed to process error')        
+        except Exception:
+            logging.exception('Failed to process error')
 
 
 logging.info('Creating server at ' + settings['errorserver.host'] + ':' + settings['errorserver.port'])

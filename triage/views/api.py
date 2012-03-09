@@ -3,10 +3,9 @@ import base64
 import json
 from triage.models import Error
 
+
 @view_config(route_name='api_log', renderer='string')
 def log(request):
-    available_projects = request.registry.settings['projects']
-
     get_params = dict(request.GET)
     try:
         msg = json.loads(base64.b64decode(get_params['data']))
