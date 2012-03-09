@@ -109,8 +109,7 @@ def view(request):
         'instance': error.instances[-1],
         'other_errors': error.instances,
         'selected_project': selected_project,
-        'available_projects': available_projects,
-        'comment_form': Form(CommentsSchema(), buttons=('submit',), formid="comment_form")
+        'available_projects': available_projects
     }
 
     try:

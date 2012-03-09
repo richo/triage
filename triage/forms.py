@@ -1,7 +1,7 @@
 from colander import MappingSchema, SchemaNode
 from colander import String, Email
 from colander import Invalid
-from deform.widget import PasswordWidget, TextAreaWidget
+from deform.widget import PasswordWidget
 from triage.models import User
 from passlib.apps import custom_app_context as pwd_context
 
@@ -32,10 +32,6 @@ def user_register_validator(form, values):
 
     if exception.children:
         raise exception
-
-
-class CommentsSchema(MappingSchema):
-    comment = SchemaNode(String(), description='Your comment', widget=TextAreaWidget())
 
 
 class UserLoginSchema(MappingSchema):

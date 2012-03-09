@@ -140,11 +140,9 @@
 	</dl>
 	{% endif %}
 
-	{% if user and comment_form %}
+	{% if user %}
 		<form class="comment-form" method="POST" action="{{ route_url('error_comment_add', project=selected_project.id, id=error._id, tag='') }}">
-			{% for f in comment_form %}
-				{{ f.render()|safe }}
-			{% endfor %}
+			<textarea name="comment"></textarea>
 			<input type="submit" name="submit" value="Submit" class="btn btn-primary btn-comment">
 		</form>
 	{% endif %}
