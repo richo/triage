@@ -121,7 +121,8 @@ class ErrorQuerySet(QuerySet):
 class Error(Document):
     meta = {
         'queryset_class': ErrorQuerySet,
-        'ordering': ['-timelatest']
+        'ordering': ['-timelatest'],
+        'indexes': ['-count', '+count', '-timelatest', '+timelatest', '-comments', '+comments']
     }
 
     hash = StringField(required=True)
