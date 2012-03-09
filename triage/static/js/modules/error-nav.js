@@ -9,8 +9,7 @@ Triage.modules.errorNav = (function($, app) {
 	var page = 0;
 	var search;
 
-	var reloadList = function() {
-		page = 0;
+	var buildUrl = function() {
 
 		var params = {
 			show: show,
@@ -22,8 +21,18 @@ Triage.modules.errorNav = (function($, app) {
 			params['search'] = search;
 		}
 
+		if (page) {
+			params['start'] = page * 20;
+		}
+
+		return window.location.origin + window.location.pathname + '?' + $.param(params);
+	};
+
+	var reloadList = function() {
+		page = 0;
+
 		$.pjax({
-			url: window.location.origin + window.location.pathname + '?' + $.param(params),
+			url: buildUrl(),
 			container: '.error-list tbody',
 			replace: false,
 			allowEmptyData: true,
@@ -31,8 +40,17 @@ Triage.modules.errorNav = (function($, app) {
 		});
 	};
 
-	var loadPage = function() {
+	var loadNextPage = function() {
 
+		page++;
+
+		$.ajax({
+			url: buildUrl(),
+			dataType: 'html',
+			success: function(data){
+				$('.error-list tbody').append(data);
+			}
+		});		
 	};
 
 	var updateShowTabs = function(tab) {
@@ -86,6 +104,12 @@ Triage.modules.errorNav = (function($, app) {
 				reloadList();
 				return false;
 			});
+
+			$(window).scroll(function(){
+				if  ($(window).scrollTop() == $(document).height() - $(window).height()){
+					loadNextPage();
+				}
+			});			
 		},
 		stop: function() {
 
