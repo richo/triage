@@ -168,6 +168,24 @@ def toggle_claim(request):
         return {'type': 'failure'}
 
 
+@view_config(route_name='error_toggle_resolve', permission='authenticated', xhr=True, renderer='json')
+def toggle_resolve(request):
+    error_id = request.matchdict['id']
+    selected_project = get_selected_project(request)
+
+    try:
+        error = Error.objects(project=selected_project['id']).with_id(error_id)
+        if error.hiddenby and error.hiddenby != request.user:
+            return {'type': 'failure'}
+
+        error.hiddenby = None if error.hiddenby else request.user
+        error.save()
+
+        return {'type': 'success'}
+    except:
+        return {'type': 'failure'}
+
+
 @view_config(route_name='error_tag_add', permission='authenticated', xhr=True, renderer='json')
 def tag_add(request):
     tag = request.matchdict['tag']

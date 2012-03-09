@@ -84,6 +84,14 @@ Triage.modules.errorList = (function($, app) {
 				$('.error-list tr.error-active .claimed-by').fadeOut(function () { $(this).remove(); });
 			});
 
+			app.on('pane.resolve', function() {
+				$('.error-list tr.error-active').fadeOut(function () { $(this).remove(); });
+			});
+
+			app.on('pane.reopen', function() {
+				$('.error-list tr.error-active').fadeOut(function () { $(this).remove(); });
+			});
+
 			app.on('pane.tag.add', function(tag) {
 				$('<span class="label label-' + tag + '">' + tag + '</span>').appendTo(
 					$('.error-list tr.error-active .error .detail-tags')

@@ -6,12 +6,6 @@ Triage.modules.pane = (function($, app) {
 	var errorId;
 	var errorUrl;
 
-	var loadError = function() {
-		$('.pane .pane-inner').load(errorUrl, function(){
-			updateTabPane();
-		});
-	};
-
 	var updateTabPane = function() {
 		var tab = $('.pane-active');
 		if (tab.length) {
@@ -20,6 +14,12 @@ Triage.modules.pane = (function($, app) {
 			active.show();
 			app.trigger('error.viewed', errorId);
 		}
+	};
+
+	var loadError = function() {
+		$('.pane .pane-inner').load(errorUrl, function(){
+			updateTabPane();
+		});
 	};
 
 	var selectTab = function(tab) {
@@ -123,16 +123,29 @@ Triage.modules.pane = (function($, app) {
 				loadError();
 			});
 
-			$(document).on('click', '.claim-btn, .unclaim-btn', function(e) {
+			$(document).on('click', '.btn-claim, .btn-unclaim', function(e) {
 				e.preventDefault();
 				var button = $(this);
 				if (button.hasClass('disabled')) return;
 
 				button.addClass('disabled');
 				$.post(button.attr('href'), function(data) {
-					var trigger = button.hasClass('claim-btn') && data.type == 'success' ? 'pane.claim': 'pane.unclaim';
+					var trigger = button.hasClass('btn-claim') && data.type == 'success' ? 'pane.claim': 'pane.unclaim';
 					app.trigger(trigger);
 					loadError();
+				});
+			});
+
+			$(document).on('click', '.btn-resolve, .btn-reopen', function(e) {
+				e.preventDefault();
+				var button = $(this);
+				if (button.hasClass('disabled')) return;
+
+				button.addClass('disabled');
+				$.post(button.attr('href'), function(data) {
+					var trigger = button.hasClass('btn-resolve') && data.type == 'success' ? 'pane.resolve': 'pane.reopen';
+					app.trigger(trigger);
+					hidePane();
 				});
 			});
 

@@ -20,15 +20,23 @@
 		</dl>
 	</div>
 	<div class="summary-tags well">
+
 		{% if error.claimedby %}
 			{% if user == error.claimedby %}
-				<a href="{{ route_url('error_toggle_claim', project=selected_project.id, id=error._id) }}" class="btn btn-warning unclaim-btn">Unclaim</a>
+				<a href="{{ route_url('error_toggle_claim', project=selected_project.id, id=error._id) }}" class="btn btn-warning btn-unclaim">Unclaim</a>
 			{% else %}
 				<span>Claimed by {{error.claimedby.name}}</span>
 			{% endif %}
 		{% else %}
-			<a href="{{ route_url('error_toggle_claim', project=selected_project.id, id=error._id) }}" class="btn btn-primary claim-btn">Claim</a>
+			<a href="{{ route_url('error_toggle_claim', project=selected_project.id, id=error._id) }}" class="btn btn-primary btn-claim">Claim</a>
 		{% endif %}
+
+		{% if error.hiddenby %}
+			<a href="{{ route_url('error_toggle_resolve', project=selected_project.id, id=error._id) }}" class="btn btn-danger btn-reopen">Reopen</a>
+		{% else %}
+			<a href="{{ route_url('error_toggle_resolve', project=selected_project.id, id=error._id) }}" class="btn btn-success btn-resolve">Resolve</a>
+		{% endif %}
+
 		<h5>Tags</h5>
 		{% if error.tags %}
 			<ul class="tag-list">
