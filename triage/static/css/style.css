@@ -198,6 +198,16 @@ body {
 	background-color: #FFFFFF;
 }
 
+.error-list td.error {
+	width: 700px;
+}
+
+.error-list div.error {
+	overflow: hidden;
+	width: inherit;
+	white-space: nowrap;
+}
+
 #information a.error {
 	display: block;
 }
