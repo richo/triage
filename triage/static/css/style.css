@@ -417,10 +417,10 @@ body {
 /*	Order items
 	------------------------------------------------------------ */
 
-#order-items .desc i{
+#order-items .active.desc i{
 	background-position:-313px -119px;
 }
 
-#order-items .asc i{
+#order-items .active.asc i{
 	background-position:-288px -120px;
 }
