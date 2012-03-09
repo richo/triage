@@ -123,12 +123,17 @@ Triage.modules.pane = (function($, app) {
 				loadError();
 			});
 
-			$(document).on('click', '.claim-btn', function() {
-				app.trigger('pane.claim');
-			});
+			$(document).on('click', '.claim-btn, .unclaim-btn', function(e) {
+				e.preventDefault();
+				var button = $(this);
+				if (button.hasClass('disabled')) return;
 
-			$(document).on('click', '.unclaim-btn', function() {
-				app.trigger('pane.unclaim');
+				button.addClass('disabled');
+				$.post(button.attr('href'), function() {
+					var trigger = button.hasClass('claim-btn') ? 'pane.claim' : 'pane.unclaim';
+					app.trigger(trigger);
+					loadError();
+				});
 			});
 
 			$(document).on('click', '.tag-delete', function() {

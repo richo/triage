@@ -25,7 +25,7 @@
 		</div>
 		{% endblock %}
 	</td>
-	<td class="date vmiddle tooltip-toggle" data-original-title="First seen: {{ date(error.timefirst) }}">
+	<td class="date tooltip-toggle" data-original-title="First seen: {{ date(error.timefirst) }}">
 		{% block right_cell %}
 		Last occured {{ date(error.timelatest) }}<br/>
 		{% if error.claimedby and error.claimedby == user %}

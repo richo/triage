@@ -73,6 +73,16 @@ Triage.modules.errorList = (function($, app) {
 			app.on('error.viewed', function(errorId) {
 				$('#error-'+errorId).removeClass('unseen').addClass('seen');
 			});
+
+			app.on('pane.claim', function() {
+				$('.error-list tr.error-active td.date').append(
+					'<span class="claimed-by"><i class="icon-star"></i>&nbsp;You</span>'
+				);
+			});
+
+			app.on('pane.unclaim', function() {
+				$('.error-list tr.error-active .claimed-by').fadeOut(function () { $(this).remove(); });
+			});
 		},
 		stop: function() { },
 		currentHash: null

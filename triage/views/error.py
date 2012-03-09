@@ -175,7 +175,7 @@ def view(request):
         return render_to_response(template, params)
 
 
-@view_config(route_name='error_toggle_claim', permission='authenticated')
+@view_config(route_name='error_toggle_claim', permission='authenticated', renderer='json')
 def toggle_claim(request):
     error_id = request.matchdict['id']
     selected_project = get_selected_project(request)
@@ -185,10 +185,9 @@ def toggle_claim(request):
         error.claimedby = None if error.claimedby else request.user
         error.save()
 
-        url = request.route_url('error_view', project=selected_project['id'], id=error_id)
-        return HTTPFound(location=url)
+        return {'type': 'success'}
     except:
-        return HTTPNotFound()
+        return {'type': 'failure'}
 
 
 @view_config(route_name='error_toggle_hide')
