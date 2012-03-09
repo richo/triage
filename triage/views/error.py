@@ -204,10 +204,8 @@ def comment_add(request):
             created=int(time())
         ))
         error.save()
-
         return {'type': 'success'}
-
-    except ValidationFailure:
+    except:
         return {'type': 'failure'}
 
 
