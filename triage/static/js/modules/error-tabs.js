@@ -17,7 +17,8 @@ Triage.modules.errorTabs = (function($, app) {
 
 			$list.pjax(".error-list tbody", {
 				replace: false,
-				allowEmptyData: true
+				allowEmptyData: true,
+				timeout: 10000,
 			});
 
 			$list.on("click", function() {

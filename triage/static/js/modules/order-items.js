@@ -17,24 +17,19 @@ Triage.modules.orderItems = (function($, app) {
 
 			$list.pjax(".error-list tbody", {
 				replace: false,
-				allowEmptyData: true
+				allowEmptyData: true,
+				timeout: 10000,
 			});
 
 			$list.on("click", function() {
 				var $parent = $(this).parent();
 
 				if ($parent.hasClass('active')) {
-					var href;
+					var $button = $(this);
 					if ($parent.hasClass('desc')) {
-						href = $(this).attr("href").replace(/(.*)direction=(.*)/i, "$1direction=asc");
-						$(this).attr('href', href);
-						$parent.removeClass('desc');
-						$parent.addClass('asc');
+						this.setAsc($parent, $button);
 					} else {
-						href = $(this).attr("href").replace(/(.*)direction=(.*)/i, "$1direction=desc");
-						$(this).attr('href', href);
-						$parent.removeClass('asc');
-						$parent.addClass('desc');
+						this.setDesc($parent, $button);
 					}
 				} else {
 					self.orderBy = $parent.data("name");
@@ -61,6 +56,18 @@ Triage.modules.orderItems = (function($, app) {
 		},
 		isOrderBy: function(name) {
 			return this.orderBy.search(name) > -1;
+		},
+		setDesc: function($parent, $button) {
+			var href = $button.attr("href").replace(/(.*)direction=(.*)/i, "$1direction=desc");
+			$button.attr('href', href);
+			$button.removeClass('asc');
+			$button.addClass('desc');
+		},
+		setAsc: function($parent, $button) {
+			var href = $button.attr("href").replace(/(.*)direction=(.*)/i, "$1direction=asc");
+			$button.attr('href', href);
+			$parent.removeClass('desc');
+			$parent.addClass('asc');
 		}
 	};
 });
