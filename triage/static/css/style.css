@@ -444,6 +444,7 @@ body {
 
 .tag-list li {
 	padding: 2px 0;
+	display: inline-block;
 }
 
 .tag-delete {
@@ -458,6 +459,27 @@ body {
 	margin-right: 5px;
 	height:40px;
 	width:40px;
+}
+
+
+#comments {
+	list-style-type: none;
+	width: 400px;
+}
+
+#comments .comment-author {
+	text-shadow: none;
+}
+
+#comments .alert-info {
+	padding: 5px;
+	margin-bottom: 0;
+}
+
+#comments .date {
+	font-size: 10px;
+	text-align: right;
+	text-shadow: none;
 }
 
 /*	Order items
