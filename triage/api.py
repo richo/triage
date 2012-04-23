@@ -7,7 +7,7 @@ from pyramid.paster import get_appsettings
 from models import Error
 
 #logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 
 
 # config
@@ -32,11 +32,17 @@ unpacker = msgpack.Unpacker()
 # serve!
 logging.info('Serving!')
 while True:
-    unpacker.feed(socket.recv())
-    for msg in unpacker:
-        if type(msg) == dict:
-            try:
+    try:
+        data = socket.recv()
+        logging.debug('received data')
+        unpacker.feed(data)
+        logging.debug('fed data to unpacker')
+        for msg in unpacker:
+            logging.debug('found message in unpacker')
+            if type(msg) == dict:
+                logging.debug('found object in message')
                 error = Error.create_from_msg(msg)
                 error.save()
-            except Exception, a:
-                logging.exception('Failed to process error')
+                logging.debug('saved error')
+    except Exception, a:
+        logging.exception('Failed to process error')
