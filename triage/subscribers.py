@@ -78,7 +78,6 @@ def add_set_params(event):
     event['set_params'] = test
 
 
-from utils import FixedTimezone
 @subscriber(BeforeRender)
 def add_date(event):
     def test(timestamp, format_today='%I:%M %p', format_other='%d %b %y'):
@@ -89,14 +88,15 @@ def add_date(event):
         tomorrow = today + timedelta(days=1)
         date = datetime.fromtimestamp(timestamp)
 
-        tz = None
-        if request.user and request.user.tzoffset:
-            date = date.astimezone(FixedTimezone(request.user.tzoffset))
-
         if date >= today and date < tomorrow:
-            return date.strftime(format_today)
+            f = format_today
+        else:
+            f = format_other
 
-        return date.strftime(format_other)
+        if request.user and request.user.tzoffset:
+            date = date - timedelta(minutes=request.user.tzoffset)
+
+        return date.strftime(f)
 
     event['date'] = test
 
