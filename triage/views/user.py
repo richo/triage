@@ -29,6 +29,8 @@ def login(request):
 
             try:
                 user = User.objects.get(email=values['email'])
+                user.tzoffset = values['tzoffset']
+                user.save()
             except DoesNotExist:
                 return HTTPNotFound()
 
@@ -63,6 +65,7 @@ def register(request):
             values = form.validate(controls)
 
             user = User.from_data(values)
+            user.tzoffset = values['tzoffset']
             user.save()
 
             headers = remember(request, str(user.id))

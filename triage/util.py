@@ -1,5 +1,23 @@
 from math import ceil
 
+from datetime import tzinfo, timedelta, datetime
+class FixedTimezone(tzinfo):
+    """Fixed offset in minutes east from UTC."""
+
+    def __init__(self, offset):
+        self.__offset = timedelta(minutes = offset)
+        self.__name = str(offset)
+
+    def utcoffset(self, dt):
+        return self.__offset
+
+    def tzname(self, dt):
+        return self.__name
+
+    def dst(self, dt):
+        return timedelta(0)
+
+
 
 class Paginator:
 

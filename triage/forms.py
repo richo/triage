@@ -1,7 +1,7 @@
 from colander import MappingSchema, SchemaNode
-from colander import String, Email
+from colander import String, Email, Integer
 from colander import Invalid
-from deform.widget import PasswordWidget
+from deform.widget import PasswordWidget, HiddenWidget
 from triage.models import User
 from passlib.apps import custom_app_context as pwd_context
 
@@ -37,6 +37,7 @@ def user_register_validator(form, values):
 class UserLoginSchema(MappingSchema):
     email = SchemaNode(String(), description='Enter your email address', validator=Email())
     password = SchemaNode(String(), description='Enter your password', widget=PasswordWidget())
+    tzoffset = SchemaNode(Integer(), widget=HiddenWidget())
 
 
 class UserRegisterSchema(MappingSchema):
@@ -44,3 +45,4 @@ class UserRegisterSchema(MappingSchema):
     email = SchemaNode(String(), description='Enter your email address', validator=Email())
     password = SchemaNode(String(), description='Enter your password', widget=PasswordWidget())
     confirm_password = SchemaNode(String(), description='Confirm your password', widget=PasswordWidget())
+    tzoffset = SchemaNode(Integer(), widget=HiddenWidget())

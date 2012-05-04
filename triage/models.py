@@ -26,6 +26,7 @@ class User(Document):
     email = EmailField(required=True)
     password = StringField(required=True)
     created = IntField(required=True)
+    tzoffset = IntField()
 
     @classmethod
     def from_data(cls, data):

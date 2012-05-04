@@ -78,13 +78,20 @@ def add_set_params(event):
     event['set_params'] = test
 
 
+from utils import FixedTimezone
 @subscriber(BeforeRender)
 def add_date(event):
     def test(timestamp, format_today='%I:%M %p', format_other='%d %b %y'):
 
+        request = event.get('request') or threadlocal.get_current_request()
+
         today = datetime.today().replace(hour=0, minute=0, second=0, microsecond=0)
         tomorrow = today + timedelta(days=1)
         date = datetime.fromtimestamp(timestamp)
+
+        tz = None
+        if request.user and request.user.tzoffset:
+            date = date.astimezone(FixedTimezone(request.user.tzoffset))
 
         if date >= today and date < tomorrow:
             return date.strftime(format_today)
@@ -102,6 +109,7 @@ def add_switch(event):
         return false
 
     event['switch'] = test
+
 
 
 @subscriber(BeforeRender)
