@@ -115,6 +115,7 @@ class ErrorQuerySet(QuerySet):
 class Error(Document):
     meta = {
         'queryset_class': ErrorQuerySet,
+        'allow_inheritance': False,
         'ordering': ['-timelatest'],
         'indexes': ['-count', '+count', '-timelatest', '+timelatest', '-comments', '+comments', '+hash']
     }
@@ -136,6 +137,39 @@ class Error(Document):
     comments = ListField(EmbeddedDocumentField(Comment))
     seenby = ListField(ReferenceField(User))
     hiddenby = ReferenceField(User) 
+
+    @classmethod
+    def validate_and_upsert(cls, msg):
+        msg['hash'] = ErrorHasher(msg).get_hash()
+        msg['timelatest'] = int(time())
+
+        error = cls.create_from_msg(msg)
+        error.validate()
+
+        collection = error._get_collection() #probs a hack
+        collection.update({'hash':msg['hash']}, {
+            '$set': {
+                'hash': msg['hash'],
+                'project': msg['project'],
+                'language': msg['language'],                
+                'message': msg['message'],
+                'type': msg['type'],
+                'line': msg['line'],
+                'file': msg['file'],
+                'context': msg['context'],                
+                'backtrace': msg['backtrace'], 
+                'timelatest': msg['timelatest'],            
+            },
+            '$inc': {
+                'count': 1
+            },
+            '$push': {
+                'instances': {
+                    'timecreated': msg['timelatest'],
+                    'message': msg['message']         
+                }
+            }            
+        }, upsert=True)
 
     @classmethod
     def from_msg(cls, msg):
@@ -167,6 +201,9 @@ class Error(Document):
         self.count = self.count + 1
         self.hiddenby = None
         self.instances.append(instance)
+
+
+
 
     @property
     def timefirst(self):
