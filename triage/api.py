@@ -41,7 +41,8 @@ while True:
             logging.debug('found message in unpacker')
             if type(msg) == dict:
                 logging.debug('found object in message')
-                error = Error.create_from_msg(msg)
+                error = Error.from_msg(msg)
+                logging.debug('error instance created/found')
                 error.save()
                 logging.debug('saved error')
     except Exception, a:

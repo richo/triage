@@ -4,16 +4,16 @@
 		<h4>{{error.type}}</h4>
 
 		<ul>
-			{% if instance.file %}
+			{% if error.file %}
 				<li>
 				<span class="title">File</span>
-				{{ instance.file }}
+				{{ error.file }}
 				</li>
 			{% endif %}
-			{% if instance.line %}
+			{% if error.line %}
 				<li>
 				<span class="title">Line number</span>
-				{{ instance.line }}
+				{{ error.line }}
 				</li>
 			{% endif %}
 			<li>
@@ -79,7 +79,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% for row in instance.backtrace %}
+			{% for row in error.backtrace %}
 				<tr>
 					<td class="method">
 						{% if row.class %}{{ row.class }}::{% endif %}{% if row.function %}{{ row.function }}{% endif %}
@@ -100,11 +100,11 @@
 <div class="pane-view pane-context">
 	<h3>Context</h3>
 	<table class="table table-striped table-condensed">
-	{% if instance.context %}
-		{% for key in instance.context %}
+	{% if error.context %}
+		{% for key in error.context %}
 			<tr>
 				<td>{{key}}</td>
-				<td>{{ instance.context[key] }}</td>
+				<td>{{ error.context[key] }}</td>
 			</tr>
 		{% endfor %}
 	{% endif %}
@@ -117,8 +117,8 @@
 <div class="pane-view pane-similar">
 	<h3>Similar Errors</h3>
 	<ul class="related-errors">
-		{% for e in other_errors[:10] %}
-			<li>{{ date(e.timecreated) }} <a href="{{ route_url('error_view', project=selected_project.id, id=e._id) }}">{{e.message}}</a></li>
+		{% for e in error.instances[:10] %}
+			<li>{{ date(e.timecreated) }} - {{e.message}}</li>
 		{% endfor %}
 	</ul>
 </div>
