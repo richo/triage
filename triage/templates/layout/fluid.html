@@ -5,33 +5,12 @@
 <div class="container-fluid has-sidebar">
 
 	<div class="middlebar">
-		{% block middlebar %}
-		{% endblock %}
+		{% block middlebar %}{% endblock %}
 	</div>
 
 	<div class="content">
-
 		{% block content %}{% endblock %}
-
 	</div>
-
-</div>
-
-<div class="pane-padding"></div>
-<div class="pane tabbable tabs-below">
-
-	<div class="pane-container tab-content">
-		<div class="pane-inner">
-		</div>
-	</div>
-
-	<ul class="pane-actions nav nav-tabs">
-		<li data-view="summary"><a href="javascript:void(0);">Summary</a></li>
-		<li data-view="backtrace"><a href="javascript:void(0);">Backtrace</a></li>
-		<li data-view="context"><a href="javascript:void(0);">Context</a></li>
-		<li data-view="similar"><a href="javascript:void(0);">Similar Errors</a></li>
-		<li data-view="comments"><a href="javascript:void(0);">Comments</a></li>
-	</ul>
 
 </div>
 

@@ -37,7 +37,7 @@
 
 						{% if user %}
 						<li>
-							<a href="{{route_url('user_logout')}}">Logout as {{ user.name }}</a>
+							<a href="{{route_url('user_logout')}}">Logout {{ user.name }}</a>
 						</li>
 						{% else %}
 						<li>
@@ -57,5 +57,6 @@
 	{% endblock %}
 
 	{% block container %}{% endblock %}
+	{% block footer %}{% endblock %}
 
 {% endblock %}
