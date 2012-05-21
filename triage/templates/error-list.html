@@ -2,12 +2,11 @@
 
 {% block middlebar %}
 <div class="search">
-	<div class="input-prepend">
-		<span class="add-on"><i class="icon-search"></i></span>
-		<form action="{{ set_params({}) }}" method="get" id="errorlist-search">
-			<input type="text" name="search" placeholder="message, type, user" value="{{ search }}" class="searchfield span2" />
-		</form>
-	</div>
+	<form action="{{ set_params({}) }}" method="get" id="errorlist-search">
+		<div class="input-prepend">
+			<span class="add-on"><i class="icon-search"></i></span><input type="text" name="search" placeholder="message, type, user or tag" value="{{ search }}" class="searchfield span3" />
+		</div>
+	</form>
 </div>
 
 <ul id="error-tabs" class="nav nav-tabs" data-show="{{show}}">
@@ -23,6 +22,15 @@
 {% block content %}
 
 <div id="information">
+
+	<div class="btn-toolbar pull-left">
+		<div class="btn-group">
+			<a class="btn"><i class="icon-star"></i> Claim</a>
+			<a class="btn"><i class="icon-ok"></i> Resolve</a>
+			<a class="btn"><i class="icon-eye-open"></i> Mark as seen</a>
+			<a class="btn"><i class="icon-eye-close"></i> Mark as unseen</a>
+		</div>
+	</div>
 
 	<ul id="order-items" class="nav nav-pills pull-right" data-orderby="{{order_by}}">
 		<li class="{{ switch(order_by=='date') }} {{direction}}" data-name="date">
@@ -44,7 +52,7 @@
 	</table>
 
 	<div style="text-align:center;">
-		<button id="loadmore" class="btn btn-primary btn-large">Load more errors</button>
+		<button id="loadmore" class="btn btn-large">Load more errors</button>
 	</div>
 
 </div>

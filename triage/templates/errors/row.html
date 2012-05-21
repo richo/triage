@@ -3,7 +3,8 @@
 	<td class="occurances vmiddle">
 		{% block left_cell %}
 		<span class="dot"></span>
-		<span class="count">{{ error.count|int }}</span>
+		<input class="multiselect" type="checkbox" name="multiselect" value="{{ error.id }}" />
+		<span class="badge badge-important">{{ error.count|int }}</span>
 		{% endblock %}
 	</td>
 	<td class="error">
@@ -21,9 +22,9 @@
 		</div>
 		{% endblock %}
 	</td>
-	<td class="date tooltip-toggle" data-original-title="First seen: {{ date(error.timefirst) }}">
+	<td class="date">
 		{% block right_cell %}
-		Last occured {{ date(error.timelatest) }}<br/>
+		<span class="tooltip-toggle" data-original-title="First seen: {{ date(error.timefirst) }}">{{ date(error.timelatest) }}</span><br/>
 		{% if error.claimedby and error.claimedby == user %}
 			<span class="claimed-by"><i class="icon-star"></i>&nbsp;You</span>
 		{% elif error.claimedby %}
