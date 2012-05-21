@@ -97,7 +97,7 @@ class ErrorQuerySet(QuerySet):
 
         qObjects = Q()
         for keyword in search_keywords:
-            qObjects = qObjects | Q(message__icontains=keyword) | Q(type__icontains=keyword)
+            qObjects = qObjects | Q(message__icontains=keyword) | Q(type__icontains=keyword) | Q(tags__icontains=keyword)
 
         return self.filter(qObjects)
 
