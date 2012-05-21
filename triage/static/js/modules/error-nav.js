@@ -6,7 +6,7 @@ Triage.modules.errorNav = (function($, app) {
 	var show = 'open';
 	var orderBy = 'date';
 	var direction = 'desc';
-	var page = 0;
+	var rowsLoaded = 0;
 	var search;
 
 	var buildUrl = function() {
@@ -21,34 +21,38 @@ Triage.modules.errorNav = (function($, app) {
 			params['search'] = search;
 		}
 
-		if (page) {
-			params['start'] = page * 20;
+		if (rowsLoaded) {
+			params['start'] = rowsLoaded; // start is 0 indexed
 		}
 
 		return window.location.origin + window.location.pathname + '?' + $.param(params);
 	};
 
 	var reloadList = function() {
-		page = 0;
+		rowsLoaded = 0;
 
 		$.pjax({
 			url: buildUrl(),
 			container: '.error-list tbody',
 			replace: false,
 			allowEmptyData: true,
-			timeout: 2000,		
+			timeout: 2000,
+			success: function(data){
+				rowsLoaded = $('.error-list tbody tr').length;
+			}				
 		});
 	};
 
 	var loadNextPage = function() {
 
-		page++;
+		rowsLoaded = $('.error-list tbody tr').length;
 
 		$.ajax({
 			url: buildUrl(),
 			dataType: 'html',
 			success: function(data){
 				$('.error-list tbody').append(data);
+				rowsLoaded = $('.error-list tbody tr').length;
 			}
 		});		
 	};
@@ -104,12 +108,8 @@ Triage.modules.errorNav = (function($, app) {
 				reloadList();
 				return false;
 			});
-
-			$(window).scroll(function(){
-				if  ($(window).scrollTop() == $(document).height() - $(window).height()){
-					loadNextPage();
-				}
-			});			
+		
+			$('#loadmore').on('click', loadNextPage);
 		},
 		stop: function() {
 
