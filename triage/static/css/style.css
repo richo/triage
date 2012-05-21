@@ -219,7 +219,7 @@ body {
 }
 
 #information td.occurances {
-	width: 60px;
+	width: 80px;
 	text-align: left;
 }
 
@@ -229,7 +229,9 @@ body {
 }
 
 #information .count {
-	padding: 1px 6px;
+	margin-left: 5px;
+	padding: 1px 3px;
+	border-radius: 4px;
 	background-color: #f00;
 	text-align: center;
 	color: #fff;
@@ -258,12 +260,6 @@ body {
 .search {
 	float: right;
 	height: 32px;
-	overflow: hidden;
-	width: 215px;
-}
-
-.search input {
-	width: 178px;
 }
 
 
@@ -444,7 +440,6 @@ body {
 
 .tag-list li {
 	padding: 2px 0;
-	display: inline-block;
 }
 
 .tag-delete {
