@@ -30,6 +30,10 @@ class ErrorHasher:
         }
 
 
+class Project(Document):
+    name = StringField(required=True)
+    
+
 class User(Document):
     name = StringField(required=True)
     email = EmailField(required=True)

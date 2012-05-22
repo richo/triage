@@ -81,8 +81,6 @@ def error_page(request):
         'show': show,
         'order_by': order_by,
         'direction': direction,
-        'tags': Tag.objects(),
-        'users': User.objects(),
     }
 
 

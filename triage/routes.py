@@ -16,3 +16,7 @@ def routes(config):
     config.add_route('user_login', 'user/login')
     config.add_route('user_register', 'user/register')
     config.add_route('user_logout', 'user/logout')
+   # Admin
+    config.add_route('user_admin', 'admin/users')
+    config.add_route('project_admin', 'admin/projects')
+ 
