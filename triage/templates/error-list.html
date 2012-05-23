@@ -11,10 +11,14 @@
 
 <ul id="error-tabs" class="nav nav-tabs" data-show="{{show}}">
 	<li class="{{ switch(show=='open') }}" data-name="open">
-		<a href="{{route_url('error_list', project=selected_project.id)}}">Open</a>
+		<a href="{{route_url('error_list', project=selected_project.id)}}">Open <span class="count">({{counts.open}})</span></a>
 	</li>
-	<li class="{{ switch(show=='resolved') }}" data-name="resolved"><a href="{{route_url('error_list', project=selected_project.id)}}?show=resolved">Resolved</a></li>
-	<li class="{{ switch(show=='mine') }}" data-name="mine"><a href="{{route_url('error_list', project=selected_project.id)}}?show=mine">Mine</a></li>
+	<li class="{{ switch(show=='resolved') }}" data-name="resolved">
+		<a href="{{route_url('error_list', project=selected_project.id)}}?show=resolved">Resolved <span class="count">({{counts.resolved}})</span></a>
+	</li>
+	<li class="{{ switch(show=='mine') }}" data-name="mine">
+		<a href="{{route_url('error_list', project=selected_project.id)}}?show=mine">Mine <span class="count">({{counts.mine}})</span></a>
+	</li>
 </ul>
 {% endblock %}
 

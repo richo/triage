@@ -73,6 +73,12 @@ def error_page(request):
 
     errors = get_errors(request)
 
+    counts = {
+        'open': Error.objects.active(selected_project).filter(seenby__ne=request.user).count(),
+        'resolved': Error.objects.resolved(selected_project).filter(seenby__ne=request.user).count(),
+        'mine': Error.objects.active(selected_project).filter(claimedby=request.user).count()
+    }
+
     return {
         'search': search,
         'errors': errors,
@@ -81,6 +87,7 @@ def error_page(request):
         'show': show,
         'order_by': order_by,
         'direction': direction,
+        'counts': counts
     }
 
 
