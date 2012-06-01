@@ -62,6 +62,9 @@ Triage.modules.errorNav = (function($, app) {
 		show = tab.data('name');
 		tab.siblings().removeClass('active').addClass('inactive');
 		tab.removeClass('inactive').addClass('active');
+
+		app.trigger('system.activecountchanged', parseInt(tab.find('.count').text()));
+
 		reloadList();
 	};
 
@@ -109,6 +112,18 @@ Triage.modules.errorNav = (function($, app) {
 				return false;
 			});
 		
+			app.on('error.seen', function(errorId) {
+				var currentTab = $('#error-tabs li.active');
+				var count;
+
+				if (currentTab.data('name') != 'mine') {
+					count = parseInt(currentTab.find('.count').text())-1;
+					currentTab.find('.count').text(count);
+					app.trigger('system.activecountchanged', count);
+				}
+
+			});
+
 			$('#loadmore').on('click', loadNextPage);
 		},
 		stop: function() {

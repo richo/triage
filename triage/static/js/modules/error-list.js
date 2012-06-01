@@ -77,11 +77,10 @@ Triage.modules.errorList = (function($, app) {
 			app.on('error.viewed', function(errorId) {
 				var node = $('#error-'+errorId);
 				var unseen = node.hasClass('unseen');
-				var currentTab = $('#error-tabs li.active');
 				node.removeClass('unseen').addClass('seen');
 
-				if (unseen && currentTab.data('name') != 'mine') {
-					currentTab.find('.count').text(currentTab.find('.count').text()-1);
+				if (unseen) {
+					app.trigger('error.seen', errorId);
 				}
 			});
 
