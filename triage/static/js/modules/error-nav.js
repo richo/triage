@@ -124,6 +124,11 @@ Triage.modules.errorNav = (function($, app) {
 
 			});
 
+			$(function() {
+				var count = $('#error-tabs li.active .count');
+				app.trigger('system.activecountchanged', parseInt(count.text()));
+			});
+
 			$('#loadmore').on('click', loadNextPage);
 		},
 		stop: function() {
