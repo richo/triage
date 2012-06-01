@@ -487,3 +487,13 @@ body {
 #order-items .active.asc i{
 	background-position:-288px -120px;
 }
+
+/*	Buttons
+	------------------------------------------------------------ */
+
+.btn-spinner {
+	padding-left: 25px;
+	width: 25px;
+	height: 25px;
+ 	background: url(/static/img/25-spinner.gif) left center no-repeat;
+}

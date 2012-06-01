@@ -13,8 +13,8 @@ Triage.modules.errorNav = (function($, app) {
 
 		var params = {
 			show: show,
-			order_by: orderBy, 
-			direction: direction,
+			order_by: orderBy,
+			direction: direction
 		};
 
 		if (search) {
@@ -39,22 +39,25 @@ Triage.modules.errorNav = (function($, app) {
 			timeout: 2000,
 			success: function(data){
 				rowsLoaded = $('.error-list tbody tr').length;
-			}				
+			}
 		});
 	};
 
 	var loadNextPage = function() {
+		var button = $(this);
 
 		rowsLoaded = $('.error-list tbody tr').length;
+		button.attr('disabled', true).find('span').addClass('btn-spinner');
 
 		$.ajax({
 			url: buildUrl(),
 			dataType: 'html',
 			success: function(data){
+				button.attr('disabled', false).find('span').removeClass('btn-spinner');
 				$('.error-list tbody').append(data);
 				rowsLoaded = $('.error-list tbody tr').length;
 			}
-		});		
+		});
 	};
 
 	var updateShowTabs = function(tab) {
@@ -69,7 +72,7 @@ Triage.modules.errorNav = (function($, app) {
 	};
 
 
-	var UpdateOrderTabs = function(tab) {
+	var updateOrderTabs = function(tab) {
 
 		orderBy = tab.data('name');
 
@@ -95,14 +98,13 @@ Triage.modules.errorNav = (function($, app) {
 
 	return {
 		start: function() {
-
-			$('#error-tabs li').on('click', function() { 
+			$('#error-tabs li').on('click', function() {
 				updateShowTabs($(this));
 				return false;
 			});
 
-			$('#order-items li').on('click', function() { 
-				UpdateOrderTabs($(this));
+			$('#order-items li').on('click', function() {
+				updateOrderTabs($(this));
 				return false;
 			});
 
@@ -111,7 +113,7 @@ Triage.modules.errorNav = (function($, app) {
 				reloadList();
 				return false;
 			});
-		
+
 			app.on('error.seen', function(errorId) {
 				var currentTab = $('#error-tabs li.active');
 				var count;
@@ -132,8 +134,9 @@ Triage.modules.errorNav = (function($, app) {
 			$('#loadmore').on('click', loadNextPage);
 		},
 		stop: function() {
-
+			$('#loadmore').on('click', loadNextPage);
 		},
+		stop: function() { }
 	};
 });
 
