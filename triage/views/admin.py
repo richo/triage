@@ -10,7 +10,7 @@ from triage.models import User
 from mongoengine.queryset import DoesNotExist
 
 
-@view_config(route_name='user_admin', permission='authenticated', renderer='user/list.html')
+@view_config(route_name='user_admin', permission='authenticated', renderer='admin/users.html')
 def user_admin(request):
 
     return {

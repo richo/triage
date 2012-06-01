@@ -4,13 +4,14 @@
 
 <div id="information">
 
-	<table class="table">
+	<table class="table users">
 		<tbody>
 			{% for user in users %}
 				<tr>
 					<td>{{ user.name }}</td>
 					<td>{{ user.email }}</td>
-					<td>{{ date(user.created) }}</td>
+					<td class="created">{{ date(user.created) }}</td>
+					<td class="actions">view | edit | delete</td>
 				</tr>
 			{% endfor %}
 		</tbody>
