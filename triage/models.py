@@ -19,7 +19,7 @@ class ErrorHasher:
         self.error = error
 
     def get_hash(self):
-        return md5(str(self.get_identity())).hexdigest()   
+        return md5(str(self.get_identity())).hexdigest()
 
     def get_identity(self):
         return {
@@ -32,7 +32,7 @@ class ErrorHasher:
 
 class Project(Document):
     name = StringField(required=True)
-    
+
 
 class User(Document):
     name = StringField(required=True)
@@ -140,7 +140,7 @@ class Error(Document):
     tags = ListField(StringField(max_length=30))
     comments = ListField(EmbeddedDocumentField(Comment))
     seenby = ListField(ReferenceField(User))
-    hiddenby = ReferenceField(User) 
+    hiddenby = ReferenceField(User)
 
     @classmethod
     def validate_and_upsert(cls, msg):
@@ -155,14 +155,14 @@ class Error(Document):
             '$set': {
                 'hash': msg['hash'],
                 'project': msg['project'],
-                'language': msg['language'],                
+                'language': msg['language'],
                 'message': msg['message'],
                 'type': msg['type'],
                 'line': msg['line'],
                 'file': msg['file'],
-                'context': msg['context'],                
-                'backtrace': msg['backtrace'], 
-                'timelatest': msg['timelatest'],            
+                'context': msg['context'],
+                'backtrace': msg['backtrace'],
+                'timelatest': msg['timelatest'],
             },
             '$inc': {
                 'count': 1
@@ -170,9 +170,9 @@ class Error(Document):
             '$push': {
                 'instances': {
                     'timecreated': msg['timelatest'],
-                    'message': msg['message']         
+                    'message': msg['message']
                 }
-            }            
+            }
         }, upsert=True)
 
     @classmethod
