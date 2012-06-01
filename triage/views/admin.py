@@ -11,6 +11,7 @@ from mongoengine.queryset import DoesNotExist
 from deform.widget import TextInputWidget
 from colander import Invalid
 
+
 @view_config(route_name='admin_user', permission='authenticated', renderer='admin/users/list.html')
 def admin_user(request):
 
@@ -59,7 +60,19 @@ def admin_user_edit(request):
 
 @view_config(route_name='admin_user_delete', permission='authenticated')
 def admin_user_delete(request):
-    return {}
+    user = User.objects.with_id(request.matchdict['user'])
+    logged_user_id = authenticated_userid(request)
+
+    if user:
+        user.delete()
+        if str(user.id) == logged_user_id:
+            headers = forget(request)
+            return HTTPFound(location=request.route_url('index'), headers=headers)
+        else:
+            return HTTPFound(location=request.route_url('admin_user'))
+
+    else:
+        return HTTPNotFound()
 
 
 @view_config(route_name='admin_project', permission='authenticated', renderer='project/list.html')

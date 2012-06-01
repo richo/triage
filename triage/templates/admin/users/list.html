@@ -11,7 +11,7 @@
 					<td><a href="{{route_url('admin_user_edit', user=user.id)}}">{{ user.name }}</a></td>
 					<td>{{ user.email }}</td>
 					<td class="created">{{ date(user.created) }}</td>
-					<td class="actions"><a href="{{route_url('admin_user_edit', user=user.id)}}">edit</a> | <a href="{route_url('admin_user_delete', user=user.id)}}">delete</a></td>
+					<td class="actions"><a href="{{route_url('admin_user_edit', user=user.id)}}">edit</a> | <a href="{{route_url('admin_user_delete', user=user.id)}}" onclick="return confirm('Are you sure you want to delete {{user.name}}')">delete</a></td>
 				</tr>
 			{% endfor %}
 		</tbody>
