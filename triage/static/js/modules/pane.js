@@ -134,7 +134,7 @@ Triage.modules.pane = (function($, app) {
 				var button = $(this);
 				if (button.hasClass('disabled')) return;
 
-				button.addClass('disabled');
+				button.attr('disabled', true).find('i').addClass('icon-loader');
 				$.post(button.attr('href'), function(data) {
 					var trigger = button.hasClass('btn-claim') && data.type == 'success' ? 'pane.claim': 'pane.unclaim';
 					app.trigger(trigger);
@@ -147,7 +147,7 @@ Triage.modules.pane = (function($, app) {
 				var button = $(this);
 				if (button.hasClass('disabled')) return;
 
-				button.addClass('disabled');
+				button.attr('disabled', true).find('i').addClass('icon-loader');
 				$.post(button.attr('href'), function(data) {
 					var trigger = button.hasClass('btn-resolve') && data.type == 'success' ? 'pane.resolve': 'pane.reopen';
 					app.trigger(trigger);

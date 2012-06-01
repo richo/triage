@@ -47,13 +47,13 @@ Triage.modules.errorNav = (function($, app) {
 		var button = $(this);
 
 		rowsLoaded = $('.error-list tbody tr').length;
-		button.attr('disabled', true).find('span').addClass('btn-spinner');
+		button.attr('disabled', true).find('i').addClass('icon-loader');
 
 		$.ajax({
 			url: buildUrl(),
 			dataType: 'html',
 			success: function(data){
-				button.attr('disabled', false).find('span').removeClass('btn-spinner');
+				button.attr('disabled', false).find('i').removeClass('icon-loader');
 				$('.error-list tbody').append(data);
 				rowsLoaded = $('.error-list tbody tr').length;
 			}

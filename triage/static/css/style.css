@@ -491,9 +491,12 @@ body {
 /*	Buttons
 	------------------------------------------------------------ */
 
-.btn-spinner {
-	padding-left: 25px;
-	width: 25px;
-	height: 25px;
- 	background: url(/static/img/25-spinner.gif) left center no-repeat;
+.icon-loader {
+	width: 16px;
+	background-image: url(/static/img/loader.gif);
+	background-position: 0 0;
+}
+
+.icon-white.icon-loader {
+	background-image: url(/static/img/loader-white.gif);
 }
