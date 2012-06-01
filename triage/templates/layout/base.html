@@ -44,6 +44,7 @@
 		<script src="/static/js/modules/pane.js"></script>
 		<script src="/static/js/modules/error-nav.js"></script>
 		<script src="/static/js/modules/error-list.js"></script>
+		<script src="/static/js/modules/loader.js"></script>
 		<script src="/static/js/modules/fluid.js"></script>
 		<script src="/static/js/modules/infinitescroll.js"></script>
 		<script type="text/javascript">
@@ -60,6 +61,12 @@
 			<script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
 		<![endif]-->
 		{% endblock %}
+
+		<div class="page-loader">
+			<div class="progress progress-info progress-striped" style="margin-bottom: 9px;">
+				<div class="bar" style="width: 100%%">Loading...</div>
+			</div>
+		</div>
 
 	</body>
 

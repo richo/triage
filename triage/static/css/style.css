@@ -499,3 +499,29 @@ body {
 .icon-white.icon-loader {
 	background-image: url(/static/img/loader-white.gif);
 }
+
+/*	Page Loader
+	------------------------------------------------------------ */
+
+.page-loader {
+	display: none;
+	width: 500px;
+	height: 18px;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin: -9px 0 0 -250px;
+}
+
+.page-loading .page-loader {
+	display: block;
+}
+
+.page-loader .progress {
+	height: 30px;
+}
+
+.page-loader .bar {
+	height: 30px;
+	line-height: 30px;
+}
