@@ -449,11 +449,10 @@ body {
 .navbar .logo {
 	background-color: white;
 	background: url(../img/triage.png);
-	display: inline-block;
 	float:left;
 	margin-right: 5px;
 	height:40px;
-	width:40px;
+	width:30px;
 }
 
 
