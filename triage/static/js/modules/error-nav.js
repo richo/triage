@@ -135,8 +135,7 @@ Triage.modules.errorNav = (function($, app) {
 		},
 		stop: function() {
 			$('#loadmore').on('click', loadNextPage);
-		},
-		stop: function() { }
+		}
 	};
 });
 
