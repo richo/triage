@@ -18,21 +18,20 @@ def user_login_validator(form, values):
 
 
 def user_register_validator(form, values):
-    def user_inner_validator(form, values):
-        exception = Invalid(form, 'There was a problem with your submission')
-        if values['password'] != values['confirm_password']:
-            exception['confirm_password'] = 'Confirm Password does not match Password'
+    exception = Invalid(form, 'There was a problem with your submission')
+    if values['password'] != values['confirm_password']:
+        exception['confirm_password'] = 'Confirm Password does not match Password'
 
-        user = User.objects(name=values['name'])
-        if user:
-            exception['name'] = 'You have to choose a unique name'
+    user = User.objects(name=values['name'])
+    if user:
+        exception['name'] = 'You have to choose a unique name'
 
-        user = User.objects(email=values['email'])
-        if user:
-            exception['email'] = 'Email already exists in our database'
+    user = User.objects(email=values['email'])
+    if user:
+        exception['email'] = 'Email already exists in our database'
 
-        if exception.children:
-            raise exception
+    if exception.children:
+        raise exception
 
 
 def user_form_validator(current_user):
@@ -71,4 +70,12 @@ class UserFormSchema(MappingSchema):
     email = SchemaNode(String(), description='Enter your email address', validator=Email())
     password = SchemaNode(String(), description='Enter your password', widget=PasswordWidget(), missing=False)
     confirm_password = SchemaNode(String(), description='Confirm your password', widget=PasswordWidget(), missing=False)
+    tzoffset = SchemaNode(Integer(), widget=HiddenWidget())
+
+
+class UserRegisterSchema(MappingSchema):
+    name = SchemaNode(String(), descriprtion='Enter your name')
+    email = SchemaNode(String(), description='Enter your email address', validator=Email())
+    password = SchemaNode(String(), description='Enter your password', widget=PasswordWidget())
+    confirm_password = SchemaNode(String(), description='Confirm your password', widget=PasswordWidget())
     tzoffset = SchemaNode(Integer(), widget=HiddenWidget())
