@@ -17,9 +17,16 @@ def admin_user(request):
         'users': User.objects()
     }
 
+
 @view_config(route_name='admin_user_edit', permission='authenticated')
 def admin_user_edit(request):
     return {}
+
+
+@view_config(route_name='admin_user_delete', permission='authenticated')
+def admin_user_delete(request):
+    return {}
+
 
 @view_config(route_name='admin_project', permission='authenticated', renderer='project/list.html')
 def admin_project(request):
