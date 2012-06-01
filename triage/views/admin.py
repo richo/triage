@@ -10,16 +10,19 @@ from triage.models import User
 from mongoengine.queryset import DoesNotExist
 
 
-@view_config(route_name='user_admin', permission='authenticated', renderer='admin/users.html')
-def user_admin(request):
+@view_config(route_name='admin_user', permission='authenticated', renderer='admin/users.html')
+def admin_user(request):
 
     return {
         'users': User.objects()
     }
 
+@view_config(route_name='admin_user_edit', permission='authenticated')
+def admin_user_edit(request):
+    return {}
 
-@view_config(route_name='project_admin', permission='authenticated', renderer='project/list.html')
-def project_admin(request):
+@view_config(route_name='admin_project', permission='authenticated', renderer='project/list.html')
+def admin_project(request):
 
     return {
         'projects': Project.objects()
