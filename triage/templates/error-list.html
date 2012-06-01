@@ -47,7 +47,10 @@
 			<a href="{{route_url('error_list', project=selected_project.id)}}?show={{show}}&order_by=activity&direction={{direction}}">Activity <i class="icon-white"></i></a>
 		</li>
 	</ul>
-
+	<div style="clear: both;"></div>
+	<div class="changes-info alert alert-info">
+		There have been <span class="errcount"></span> changes to errors since you last reloaded. <a class="reload" href="">Click to reload</a>
+	</div>
 	<table class="error-list table">
 		<tbody>
 			{% include ['errors/list.html'] %}

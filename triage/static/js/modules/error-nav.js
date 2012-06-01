@@ -8,6 +8,7 @@ Triage.modules.errorNav = (function($, app) {
 	var direction = 'desc';
 	var rowsLoaded = 0;
 	var search;
+	var lastLoaded;
 
 	var buildUrl = function() {
 
@@ -15,6 +16,7 @@ Triage.modules.errorNav = (function($, app) {
 			show: show,
 			order_by: orderBy, 
 			direction: direction,
+			timelatest: lastLoaded
 		};
 
 		if (search) {
@@ -31,14 +33,18 @@ Triage.modules.errorNav = (function($, app) {
 	var reloadList = function() {
 		rowsLoaded = 0;
 
+		lastLoaded = Math.floor(Date.now() / 1000);
+		app.trigger('nav.reloading', lastLoaded);
+
 		$.pjax({
 			url: buildUrl(),
 			container: '.error-list tbody',
-			replace: false,
 			allowEmptyData: true,
 			timeout: 2000,
 			success: function(data){
+				$('.changes-info').hide();
 				rowsLoaded = $('.error-list tbody tr').length;
+				app.trigger('nav.reloaded', lastLoaded);
 			}				
 		});
 	};
@@ -112,6 +118,11 @@ Triage.modules.errorNav = (function($, app) {
 				return false;
 			});
 		
+			$('.changes-info .reload').on('click', function() {
+				reloadList();
+				return false;		
+			})
+
 			app.on('error.seen', function(errorId) {
 				var currentTab = $('#error-tabs li.active');
 				var count;
@@ -124,10 +135,41 @@ Triage.modules.errorNav = (function($, app) {
 
 			});
 
+			app.on('nav.newchanges', function(count){
+				$('.changes-info').slideDown().find('.errcount').text(count);
+			});
+
 			$(function() {
 				var count = $('#error-tabs li.active .count');
 				app.trigger('system.activecountchanged', parseInt(count.text()));
+
+				lastLoaded = parseInt($('.error-list tbody tr:first-child').data('timelatest'));
+
+				window.setInterval(function() {
+					var params = { 
+						show: show, 
+						timelatest: lastLoaded 
+					};
+					if (search) {
+						params['search'] = search;
+					}			
+
+					var url = window.location.origin + window.location.pathname 
+						+ '/changes?' + $.param(params);
+
+					$.ajax({
+						url: url,
+						dataType: 'json',
+						success: function(data){
+							if (data) {
+								app.trigger('nav.newchanges', data);
+							}
+						}
+					});	
+
+				}, 5000);			
 			});
+
 
 			$('#loadmore').on('click', loadNextPage);
 		},

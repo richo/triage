@@ -111,6 +111,10 @@ body {
 	border: 1px solid #DDDDDD;
 }
 
+.changes-info {
+	text-align: center;
+	display: none;
+}
 
 /*	Paginator
 	------------------------------------------------------------ */

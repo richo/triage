@@ -16,6 +16,17 @@ Triage.modules.fluid = (function($, app) {
 				}
 			});
 
+			app.on('nav.newchanges', function(count) {
+				window.fluid.requestUserAttention(true);
+				window.fluid.showGrowlNotification({
+					title: "Triage", 
+					description: count+" updates to errors", 
+					priority: 1, 
+					sticky: false,
+					identifier: "triage-changes"
+				});				
+			});
+
 			window.fluid.addDockMenuItem("Refresh current tab", function(){
 				alert('refreshed');
 			});

@@ -6,7 +6,7 @@ from triage.models import Error, Comment, Tag, User
 from time import time
 
 
-def get_errors(request):
+def get_errors(request, fetch_recent=False):
     selected_project = get_selected_project(request)
 
     search = request.GET.get('search', '')
@@ -15,6 +15,8 @@ def get_errors(request):
     order_by = request.GET.get('order_by', 'date')
     direction = request.GET.get('direction', 'desc')
     start = int(request.GET.get('start', 0))
+    time_latest = int(request.GET.get('timelatest', time()))
+
     end = start + 20
 
     if show not in ['open', 'resolved', 'mine']:
@@ -32,6 +34,11 @@ def get_errors(request):
 
     if tags:
         errors.filter(tags__in=tags)
+
+    if fetch_recent:
+        return errors.filter(timelatest__gt=time_latest).count()
+
+    errors.filter(timelatest__lte=time_latest)
 
     order_map = {
         'date': 'timelatest',
@@ -91,6 +98,11 @@ def error_page(request):
     }
 
 
+@view_config(route_name='error_list_changes', permission='authenticated', xhr=True, renderer='json')
+def error_list_changes(request):
+    return get_errors(request, True)
+
+
 @view_config(route_name='error_view', permission='authenticated')
 def view(request):
     available_projects = request.registry.settings['projects']
@@ -118,6 +130,7 @@ def view(request):
     except:
         template = 'error-view/generic.html'
         return render_to_response(template, params)
+
 
 
 @view_config(route_name='error_toggle_claim', permission='authenticated', xhr=True, renderer='json')
