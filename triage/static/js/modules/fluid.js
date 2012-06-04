@@ -17,18 +17,27 @@ Triage.modules.fluid = (function($, app) {
 			});
 
 			app.on('nav.newchanges', function(count) {
-				window.fluid.requestUserAttention(true);
+				window.fluid.requestUserAttention();
 				window.fluid.showGrowlNotification({
-					title: "Triage", 
-					description: count+" updates to errors", 
+					title: "Triage: "+count+" new errors",
+					description: "Click here to refresh",
 					priority: 1, 
 					sticky: false,
-					identifier: "triage-changes"
+					identifier: "triage-changes",
+					onclick: function() {
+						app.trigger('nav.reload');
+						if (window.fluid.activate) {
+							window.fluid.activate();
+						}
+					}
 				});				
 			});
 
 			window.fluid.addDockMenuItem("Refresh current tab", function(){
-				alert('refreshed');
+				app.trigger('nav.reload');
+				if (window.fluid.activate) {
+					window.fluid.activate();
+				}
 			});
 
 			window.fluid.addDockMenuItem("Mark all as read", function(){

@@ -167,6 +167,10 @@ Triage.modules.errorNav = (function($, app) {
 				$('.changes-info').slideDown().find('.errcount').text(count);
 			});
 
+			app.on('nav.reload', function(){
+				reloadList();
+			});
+
 			$(function() {
 				var count = $('#error-tabs li.active .count');
 				app.trigger('system.activecountchanged', parseInt(count.text()));
