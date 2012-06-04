@@ -36,16 +36,15 @@ Triage.modules.errorNav = (function($, app) {
 		lastLoaded = Math.floor(Date.now() / 1000);
 		app.trigger('nav.reloading', lastLoaded);
 
-		$.pjax({
+		$.ajax({
 			url: buildUrl(),
-			container: '.error-list tbody',
-			allowEmptyData: true,
-			timeout: 2000,
+			dataType: 'html',
 			success: function(data){
+				$('.error-list tbody').html(data);
 				$('.changes-info').hide();
 				rowsLoaded = $('.error-list tbody tr').length;
 				app.trigger('nav.reloaded', lastLoaded);
-			}				
+			}
 		});
 	};
 
