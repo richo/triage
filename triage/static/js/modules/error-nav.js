@@ -100,6 +100,28 @@ Triage.modules.errorNav = (function($, app) {
 		reloadList();
 	};
 
+	var checkForUpdates = function() {
+		var params = {
+			show: show,
+			timelatest: lastLoaded
+		};
+		if (search) {
+			params['search'] = search;
+		}			
+
+		var url = window.location.origin + window.location.pathname
+			+ '/changes?' + $.param(params);
+
+		$.ajax({
+			url: url,
+			dataType: 'json',
+			success: function(data){
+				if (data) {
+					app.trigger('nav.newchanges', data);
+				}
+			}
+		});
+	};
 
 	return {
 		start: function() {
@@ -151,29 +173,7 @@ Triage.modules.errorNav = (function($, app) {
 
 				lastLoaded = parseInt($('.error-list tbody tr:first-child').data('timelatest'));
 
-				window.setInterval(function() {
-					var params = { 
-						show: show, 
-						timelatest: lastLoaded 
-					};
-					if (search) {
-						params['search'] = search;
-					}			
-
-					var url = window.location.origin + window.location.pathname 
-						+ '/changes?' + $.param(params);
-
-					$.ajax({
-						url: url,
-						dataType: 'json',
-						success: function(data){
-							if (data) {
-								app.trigger('nav.newchanges', data);
-							}
-						}
-					});	
-
-				}, 5000);			
+				window.setInterval(checkForUpdates, 600000);			
 			});
 
 
