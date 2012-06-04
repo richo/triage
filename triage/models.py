@@ -142,7 +142,7 @@ class Error(Document):
     file = StringField()
     context = DictField()
     backtrace = ListField(DictField())
-    timelatest = IntField()
+    timelatest = FloatField()
     instances = ListField(DictField())
     count = IntField()
     claimedby = ReferenceField(User)
@@ -154,7 +154,10 @@ class Error(Document):
     @classmethod
     def validate_and_upsert(cls, msg):
         msg['hash'] = ErrorHasher(msg).get_hash()
-        msg['timelatest'] = int(time())
+        if 'timestamp' in msg:
+            msg['timelatest'] = msg['timestamp']
+        else:
+            msg['timelatest'] = int(time())
 
         error = cls.create_from_msg(msg)
         error.validate()
