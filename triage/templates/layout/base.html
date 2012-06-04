@@ -14,14 +14,11 @@
 		<meta name="author" content="">
 
 		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<link href="/static/img/fluidicon.png" rel="icon" type="image/x-icon" />
+		<link href="{{ request.host_url }}/static/img/fluidicon.png" rel="icon" type="image/x-icon" />
 		<link rel="stylesheet" href="/static/css/bootstrap.css">
 		<link rel="stylesheet" href="/static/css/jquery-ui-resizable-1.8.18.min.css">
 		<link rel="stylesheet" href="/static/css/style.css">
-
-		<link rel="fluid-icon" href="/static/img/fluidicon.png" title="Triage" />
-		<link rel="fluid-icon" href="/static/img/fluidicon.png" title="Triage Dev" />
-
+		<link rel="fluid-icon" href="{{ request.host_url }}/static/img/fluidicon.png" title="Triage" />
 		<script src="/static/js/modernizr-2.5.3.min.js"></script>
 		{% endblock %}
 	</head>

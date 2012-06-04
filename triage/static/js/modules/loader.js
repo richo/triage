@@ -5,15 +5,15 @@ Triage.modules.loader = (function($, app) {
 
 	return {
 		start: function() {
-			app.on('loader.start', function(text) {
-				$('body')
+			$('body').ajaxStart(function(text) {
+				$(this)
 					.addClass('page-loading')
 					.find('> .page-loader .progress').addClass('active')
 					.find('.bar').text(text);
 			});
 
-			app.on('loader.stop', function() {
-				$('body')
+			$('body').ajaxStop(function() {
+				$(this)
 					.removeClass('page-loading')
 					.find('> .page-loader .progress').removeClass('active')
 					.find('.bar').text('Loadding...');
