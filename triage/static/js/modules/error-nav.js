@@ -14,7 +14,7 @@ Triage.modules.errorNav = (function($, app) {
 
 		var params = {
 			show: show,
-			order_by: orderBy, 
+			order_by: orderBy,
 			direction: direction,
 			timelatest: lastLoaded
 		};
@@ -52,13 +52,13 @@ Triage.modules.errorNav = (function($, app) {
 		var button = $(this);
 
 		rowsLoaded = $('.error-list tbody tr').length;
-		button.attr('disabled', true).find('i').addClass('icon-loader');
+		button.attr('disabled', true);
 
 		$.ajax({
 			url: buildUrl(),
 			dataType: 'html',
 			success: function(data){
-				button.attr('disabled', false).find('i').removeClass('icon-loader');
+				button.attr('disabled', false);
 				$('.error-list tbody').append(data);
 				rowsLoaded = $('.error-list tbody tr').length;
 			}
@@ -107,7 +107,7 @@ Triage.modules.errorNav = (function($, app) {
 		};
 		if (search) {
 			params['search'] = search;
-		}			
+		}
 
 		var url = window.location.origin + window.location.pathname
 			+ '/changes?' + $.param(params);
@@ -143,7 +143,7 @@ Triage.modules.errorNav = (function($, app) {
 
 			$('.changes-info .reload').on('click', function() {
 				reloadList();
-				return false;		
+				return false;
 			})
 
 			$('#aggregate-action-container a').on('click', function() {
@@ -173,7 +173,7 @@ Triage.modules.errorNav = (function($, app) {
 
 				lastLoaded = parseInt($('.error-list tbody tr:first-child').data('timelatest'));
 
-				window.setInterval(checkForUpdates, 600000);			
+				window.setInterval(checkForUpdates, 600000);
 			});
 
 
