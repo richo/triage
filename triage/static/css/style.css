@@ -528,4 +528,29 @@ body {
 .page-loader .bar {
 	height: 30px;
 	line-height: 30px;
+
+/*	Admin users
+	------------------------------------------------------------ */
+
+.new-user {
+	font-size: 16px;
+	text-align: right;
+}
+
+.users {
+	margin-top: 20px;
+}
+
+.users tr:first {
+	border: none;
+}
+
+.users .actions {
+	width: 200px;
+	text-align: right;
+}
+
+.users .created {
+	width: 100px;
+>>>>>>> Added some minor styling to user list
 }

@@ -1,0 +1,23 @@
+{% extends "layout/fluid.html" %}
+
+{% block content %}
+
+<div id="information">
+	<h2 class="new-user"><a href="{{route_url('admin_user_create', user=user.id)}}">New user</a></h2>
+
+	<table class="table users">
+		<tbody>
+			{% for user in users %}
+				<tr>
+					<td><a href="{{route_url('admin_user_edit', user=user.id)}}">{{ user.name }}</a></td>
+					<td>{{ user.email }}</td>
+					<td class="created">{{ date(user.created) }}</td>
+					<td class="actions"><a href="{{route_url('admin_user_edit', user=user.id)}}">edit</a> | <a href="{{route_url('admin_user_delete', user=user.id)}}" onclick="return confirm('Are you sure you want to delete {{user.name}}')">delete</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+</div>
+
+{% endblock %}

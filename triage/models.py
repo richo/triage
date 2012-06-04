@@ -50,6 +50,15 @@ class User(Document):
                 created=int(time())
             )
 
+    def update(user, data):
+        for field in ['name', 'email', 'tzoffset']:
+            user[field] = data[field]
+
+        if data['password']:
+            user.password = pwd_context.encrypt(data['password'])
+
+        return user
+
 
 class Tag(Document):
     meta = {

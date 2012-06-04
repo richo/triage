@@ -18,6 +18,9 @@ def routes(config):
     config.add_route('user_register', 'user/register')
     config.add_route('user_logout', 'user/logout')
    # Admin
-    config.add_route('user_admin', 'admin/users')
-    config.add_route('project_admin', 'admin/projects')
+    config.add_route('admin_user', 'admin/users')
+    config.add_route('admin_user_create', 'admin/users/{user}/create')
+    config.add_route('admin_user_edit', 'admin/users/{user}/edit')
+    config.add_route('admin_user_delete', 'admin/users/{user}/delete')
+    config.add_route('admin_project', 'admin/projects')
  

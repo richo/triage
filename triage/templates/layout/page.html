@@ -36,10 +36,10 @@
 					<ul class="nav pull-right">
 
 						{% if user %}
-							<li><a href="{{route_url('user_admin')}}">Users</a></li>
-							<li><a href="{{route_url('project_admin')}}">Projects</a></li>						
+							<li><a href="{{route_url('admin_user')}}">Users</a></li>
+							<li><a href="{{route_url('admin_project')}}">Projects</a></li>
 							<li class="divider-vertical"></li>
-						
+
 							<li><a href="{{route_url('user_logout')}}">Logout {{ user.name }}</a></li>
 						{% else %}
 							<li><a href="{{route_url('user_login')}}">Login</a></li>
