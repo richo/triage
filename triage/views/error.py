@@ -5,9 +5,12 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from triage.models import Error, Comment, Tag, User
 from time import time
 
+import logging
 
 def get_errors(request, fetch_recent=False):
     selected_project = get_selected_project(request)
+
+    log = logging.getLogger(__name__)
 
     search = request.GET.get('search', '')
     show = request.GET.get('show', 'open')  # open, resolved, mine
@@ -16,8 +19,6 @@ def get_errors(request, fetch_recent=False):
     direction = request.GET.get('direction', 'desc')
     start = int(request.GET.get('start', 0))
     time_latest = int(request.GET.get('timelatest', time()))
-
-    end = start + 20
 
     if show not in ['open', 'resolved', 'mine']:
         show = 'open'
@@ -54,7 +55,14 @@ def get_errors(request, fetch_recent=False):
     if direction == 'desc':
         order_by = '-' + order_by
 
-    return errors.order_by(order_by)[start:end]
+    errors.order_by(order_by)
+
+    pagedErrors = errors.skip(start).limit(20)
+
+    log.debug(errors.count())
+    log.debug(pagedErrors.count())
+
+    return list(pagedErrors)
 
 
 @view_config(route_name='error_list', permission='authenticated', xhr=True, renderer='errors/list.html')
