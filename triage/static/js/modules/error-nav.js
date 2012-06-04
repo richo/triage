@@ -124,6 +124,11 @@ Triage.modules.errorNav = (function($, app) {
 				return false;		
 			})
 
+			$('#aggregate-action-container a').on('click', function() {
+				alert("Not implemented. Go to https://github.com/lwc/triage to fork and fix.");
+				return false;
+			})
+
 			app.on('error.seen', function(errorId) {
 				var currentTab = $('#error-tabs li.active');
 				var count;
