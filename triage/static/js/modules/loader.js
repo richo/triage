@@ -5,18 +5,12 @@ Triage.modules.loader = (function($, app) {
 
 	return {
 		start: function() {
-			$('body').ajaxStart(function(text) {
-				$(this)
-					.addClass('page-loading')
-					.find('> .page-loader .progress').addClass('active')
-					.find('.bar').text(text);
+			$('body').ajaxStart(function() {
+				$(this).addClass('page-loading');
 			});
 
 			$('body').ajaxStop(function() {
-				$(this)
-					.removeClass('page-loading')
-					.find('> .page-loader .progress').removeClass('active')
-					.find('.bar').text('Loadding...');
+				$(this).removeClass('page-loading');
 			});
 		},
 		stop: function() { }

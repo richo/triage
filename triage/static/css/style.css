@@ -491,43 +491,32 @@ body {
 	background-position:-288px -120px;
 }
 
-/*	Buttons
-	------------------------------------------------------------ */
-
-.icon-loader {
-	width: 16px;
-	background-image: url(/static/img/loader.gif);
-	background-position: 0 0;
-}
-
-.icon-white.icon-loader {
-	background-image: url(/static/img/loader-white.gif);
-}
-
 /*	Page Loader
 	------------------------------------------------------------ */
 
 .page-loader {
 	display: none;
-	width: 500px;
-	height: 18px;
+	width: 150px;
+	height: 30px;
+	line-height: 30px;
+
 	position: fixed;
+	top: 0;
 	left: 50%;
-	top: 50%;
-	margin: -9px 0 0 -250px;
+
+	margin-left: -75px;
+	border-color: #F0C36D;
+	background-color: #F9EDBE;
+	text-align: center;
+
+	-moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .page-loading .page-loader {
 	display: block;
 }
-
-.page-loader .progress {
-	height: 30px;
-}
-
-.page-loader .bar {
-	height: 30px;
-	line-height: 30px;
 
 /*	Admin users
 	------------------------------------------------------------ */
