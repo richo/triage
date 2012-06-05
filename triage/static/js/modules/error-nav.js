@@ -9,6 +9,7 @@ Triage.modules.errorNav = (function($, app) {
 	var rowsLoaded = 0;
 	var search;
 	var lastLoaded;
+	var updateCount = 0;
 
 	var buildUrl = function() {
 
@@ -116,8 +117,9 @@ Triage.modules.errorNav = (function($, app) {
 			url: url,
 			dataType: 'json',
 			success: function(data){
-				if (data) {
-					app.trigger('nav.newchanges', data);
+				if (data && data != updateCount) {
+					updateCount = data;
+					app.trigger('nav.newchanges', updateCount);
 				}
 			}
 		});
