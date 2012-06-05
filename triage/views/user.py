@@ -34,7 +34,7 @@ def login(request):
             except DoesNotExist:
                 return HTTPNotFound()
 
-            headers = remember(request, str(user.id))
+            headers = remember(request, str(user.id), max_age=10000000000)
             return HTTPFound(location='/', headers=headers)
         except ValidationFailure:
             form_render = form.render()
