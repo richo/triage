@@ -175,6 +175,7 @@ class Error(Document):
                 'context': msg['context'],
                 'backtrace': msg['backtrace'],
                 'timelatest': msg['timelatest'],
+                'hiddenby': None
             },
             '$inc': {
                 'count': 1
